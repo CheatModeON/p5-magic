@@ -1,3 +1,5 @@
+//https://codepen.io/mattboldt/pen/hcoJC
+
 let r = 400;
 let n = 16;
 let speed = [1,1,1,1,1,1,1,1];
