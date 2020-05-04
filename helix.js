@@ -34,8 +34,9 @@ function draw() {
   rect(0,0,15,2,5,5);
     
   pop();
+  console.log(vol);
   
-  if(mouseIsPressed || vol > 0.5){
+  if(mouseIsPressed || vol > 0.25){
     h.fly(15);
     if(charge < 70){
       charge += 1;
