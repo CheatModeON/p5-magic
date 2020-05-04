@@ -30,6 +30,11 @@ function setup() {
 function draw() {
   background(220);
   
+  fill(0);
+  let y = height - micLevel * height;
+  ellipse(10, y, 10, 10);
+  
+  
   r.display();
   h.display();
   r.playspeed(5);
