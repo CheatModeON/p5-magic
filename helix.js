@@ -12,6 +12,8 @@ let start;
 let score = 0;
 
 function setup() {
+  getAudioContext().suspend();
+  
   let title = select('#title');
   title.html('Helix - The Game');
   
@@ -152,4 +154,9 @@ function Rock(){
     this.size = s;
   }
   
+}
+
+
+function mousePressed() {
+  userStartAudio();
 }
