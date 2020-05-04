@@ -63,6 +63,7 @@ function draw() {
   
   text("score: "+nfc(score,0),10,20);
 
+  image(img, 10, 10, 50, 50);
 }
 
 function Helicopter(){
