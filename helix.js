@@ -26,7 +26,7 @@ function draw() {
   push();
   translate(h.getX()-20,h.getY()-20);
   rotate(angle);
-  rect(0,0,30,2);
+  rect(0,0,15,2,5,5);
     
   pop();
   
