@@ -92,9 +92,12 @@ function draw() {
   textSize(22);
   text("score: "+nfc(score,0),10,20);
   
+  fill(255)
+  let barsize=100;
+  rect(50,20,20,barsize);
   fill(0);
-  let y = height - vol * height;
-  ellipse(10, y, 10, 10);
+  let x = barsize - vol * barsize;
+  ellipse(x, 50, 10, 10);
 }
 
 function Helicopter(){
