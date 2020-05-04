@@ -19,6 +19,11 @@ function draw() {
   h.display();
   r.playspeed(5);
   h.fall(10);
+  
+  push();
+  translate(h.getX(),h.getY());
+  rect(10,10,10,10);
+  pop();
     
   
   if(mouseIsPressed){
@@ -83,6 +88,9 @@ function Helicopter(){
   }
   this.getY = function() {
     return this.y;
+  }
+  this.getX = function() {
+    return this.x;
   }
   
   this.changeColor = function() {
