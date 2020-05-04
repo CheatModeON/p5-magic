@@ -1,3 +1,4 @@
+let mic;
 let img;
 let angle = 0;
 let charge = 0;
@@ -15,6 +16,8 @@ function setup() {
   r = new Rock();
   angleMode(DEGREES);
   rectMode(CENTER);
+  mic = new p5.AudioIn();
+  mic.start();
 }
 
 function draw() {
@@ -23,6 +26,7 @@ function draw() {
   h.display();
   r.playspeed(5);
   h.fall(10);
+  var vol = mic.getLevel();
   
   push();
   translate(h.getX()-20,h.getY()-20);
@@ -31,7 +35,7 @@ function draw() {
     
   pop();
   
-  if(mouseIsPressed){
+  if(mouseIsPressed || vol > 0.5){
     h.fly(15);
     if(charge < 70){
       charge += 1;
