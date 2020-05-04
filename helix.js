@@ -1,7 +1,4 @@
 
-let div = createDiv('').size(100, 100);
-div.html('<h1>Helix - The Game<h1>');
-
 let mic;
 let img;
 let angle = 0;
@@ -15,6 +12,9 @@ let start;
 let score = 0;
 
 function setup() {
+  let div = createDiv('').size(100, 100);
+  div.html('<h1>Helix - The Game<h1>');
+  
   mic = new p5.AudioIn();
   mic.start();
   
