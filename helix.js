@@ -1,6 +1,6 @@
 let img;
 function preload() {
-  img = loadImage('assets/helicopter.png');
+  img = loadImage('p5-magic/assets/helicopter.png');
 }
 
 let d=100;
