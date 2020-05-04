@@ -11,10 +11,6 @@ function setup() {
   createCanvas(800, 600);
   h = new Helicopter();
   r = new Rock();
-  
-  // Top-left corner of the img is at (10, 10)
-  // Width and height are 50 x 50
-  image(img, 10, 10, 50, 50);
 }
 
 function draw() {
@@ -60,10 +56,8 @@ function draw() {
     r.setSize(random(50,100));
     score += 1;
   }
-  
+  image(img, h.getX(), h.getY(), 50, 50);
   text("score: "+nfc(score,0),10,20);
-
-  image(img, 10, 10, 50, 50);
 }
 
 function Helicopter(){
@@ -88,6 +82,9 @@ function Helicopter(){
   }
   this.getY = function() {
     return this.y;
+  }
+  this.getX = function() {
+    return this.x;
   }
   
   this.changeColor = function() {
