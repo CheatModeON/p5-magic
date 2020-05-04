@@ -93,7 +93,7 @@ function draw() {
   
   
   fill(0);
-  let y = height - micLevel * height;
+  let y = height - vol * height;
   ellipse(10, y, 10, 10);
 }
 
