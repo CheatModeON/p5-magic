@@ -28,7 +28,7 @@ function draw() {
   rectMode(CENTER);
   rect(30,0,30,2);
   pop();
-  angle += 2;
+  angle += 20;
     
   
   if(mouseIsPressed){
