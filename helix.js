@@ -1,4 +1,6 @@
 
+let div = createDiv('').size(100, 100);
+div.html('<h1>Helix - The Game<h1>');
 
 let mic;
 let img;
@@ -22,8 +24,6 @@ function setup() {
   angleMode(DEGREES);
   rectMode(CENTER);
   
-  let div = createDiv('').size(100, 100);
-  div.html('<h1>Helix - The Game<h1>');
 }
 
 function draw() {
