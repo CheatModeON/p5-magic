@@ -94,7 +94,7 @@ function draw() {
   
   fill(255)
   let barsize=100;
-  rect(20,50,barsize,10);
+  rect(40,50,barsize,10);
   fill(0);
   let x = 20+vol * barsize;
   ellipse(x, 50, 10, 10);
