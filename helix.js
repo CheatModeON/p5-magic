@@ -1,4 +1,4 @@
-document.getElementById("title").innerHTML = "Helix - The Game";
+document.getElementById("title").html("Helix - The Game");
 
 let mic;
 let img;
