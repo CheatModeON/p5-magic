@@ -21,8 +21,9 @@ function draw() {
   h.fall(10);
   
   push();
-  translate(h.getX(),h.getY());
-  rect(30,0,30,30);
+  translate(h.getX()-h.getR(),h.getY()-h.getR());
+  rotate(3);
+  rect(30,0,30,2);
   pop();
     
   
@@ -91,6 +92,9 @@ function Helicopter(){
   }
   this.getX = function() {
     return this.x;
+  }
+  this.getR = function() {
+    return this.r;
   }
   
   this.changeColor = function() {
