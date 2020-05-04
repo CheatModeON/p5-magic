@@ -1,4 +1,5 @@
 let img;
+let angle = 0;
 function preload() {
   img = loadImage('assets/helicopter.png');
 }
@@ -11,6 +12,7 @@ function setup() {
   createCanvas(800, 600);
   h = new Helicopter();
   r = new Rock();
+  angleMode(DEGREES);
 }
 
 function draw() {
@@ -22,9 +24,10 @@ function draw() {
   
   push();
   translate(h.getX()-h.getR(),h.getY()-h.getR());
-  rotate(3);
+  rotate(angle);
   rect(30,0,30,2);
   pop();
+  angle += 2;
     
   
   if(mouseIsPressed){
