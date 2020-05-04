@@ -56,7 +56,6 @@ function draw() {
     r.setSize(random(50,100));
     score += 1;
   }
-  image(img, h.getX(), h.getY(), 50, 50);
   text("score: "+nfc(score,0),10,20);
 }
 
@@ -67,8 +66,10 @@ function Helicopter(){
   this.col = color(255);
   
   this.display = function() {
-    ellipse(this.x, this.y, this.r*2);
-    fill(this.col);
+    //ellipse(this.x, this.y, this.r*2);
+    //fill(this.col);
+    
+    image(img, this.x-this.r, this.y-this.r, this.r*2, this.r*2);
   }
   this.fall = function(d) {
     this.y=this.y+d;
@@ -82,9 +83,6 @@ function Helicopter(){
   }
   this.getY = function() {
     return this.y;
-  }
-  this.getX = function() {
-    return this.x;
   }
   
   this.changeColor = function() {
