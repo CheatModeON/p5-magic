@@ -29,7 +29,6 @@ function setup() {
 
 function draw() {
   background(220);
-  text(getAudioContext().state, width/2, height/2);
   
   r.display();
   h.display();
@@ -45,7 +44,7 @@ function draw() {
   pop();
   console.log(vol);
   
-  if(mouseIsPressed || vol > 0.08){
+  if(mouseIsPressed || vol > 0.05){
     h.fly(15);
     if(charge < 70){
       charge += 1;
