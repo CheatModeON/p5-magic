@@ -1,8 +1,6 @@
 // https://codepen.io/mattboldt/pen/hcoJC
 // the beggining: https://math.stackexchange.com/questions/206659/dividing-circle-into-six-equal-parts-and-know-the-coordinates-of-each-diving-poi
 
-document.getElementById('title').innerHtml = 'Circle Rotation Illusion';
-
 let r = 400;
 let n = 16;
 let speed = [1,1,1,1,1,1,1,1];
@@ -13,6 +11,9 @@ let dir = [1,1,1,1,1,1,1,1];
 let show_lines = 0;
 
 function setup() {  
+  let title = select('#title');
+  title.html('Circle Rotation Illusion');
+  
   createCanvas(r*2, r*2);
   angleMode(DEGREES);
   background(255);
