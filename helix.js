@@ -22,7 +22,7 @@ function draw() {
   
   push();
   translate(h.getX(),h.getY());
-  rect(10,10,10,10);
+  rect(30,0,30,30);
   pop();
     
   
