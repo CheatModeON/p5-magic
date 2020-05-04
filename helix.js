@@ -12,8 +12,8 @@ let start;
 let score = 0;
 
 function setup() {
-  let div = createDiv('').size(100, 100);
-  div.html('<h1>Helix - The Game<h1>');
+  let title = select('#title');
+  title.html('Helix - The Game');
   
   mic = new p5.AudioIn();
   mic.start();
