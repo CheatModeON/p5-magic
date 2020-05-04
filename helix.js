@@ -33,11 +33,11 @@ function draw() {
   
   if(mouseIsPressed){
     h.fly(15);
-    if(charge<90){
+    if(angle<90){
       charge += 10;
     }
   } else {
-    if(charge>10){
+    if(angle>10){
       charge -= 10;
     }
   }
