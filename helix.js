@@ -1,4 +1,4 @@
-document.getElementById("title").html("Helix - The Game");
+
 
 let mic;
 let img;
@@ -13,13 +13,17 @@ let start;
 let score = 0;
 
 function setup() {
+  mic = new p5.AudioIn();
+  mic.start();
+  
   createCanvas(800, 600);
   h = new Helicopter();
   r = new Rock();
   angleMode(DEGREES);
   rectMode(CENTER);
-  mic = new p5.AudioIn();
-  mic.start();
+  
+  let div = createDiv('').size(100, 100);
+  div.html('Helix - The Game');
 }
 
 function draw() {
