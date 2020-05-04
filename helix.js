@@ -38,7 +38,7 @@ function draw() {
     }
   } else {
     if(charge > 10){
-      charge -= 1;
+      charge -= 3;
     }
   }
   angle = angle + charge;
