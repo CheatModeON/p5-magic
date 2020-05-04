@@ -13,6 +13,7 @@ function setup() {
   h = new Helicopter();
   r = new Rock();
   angleMode(DEGREES);
+  rectMode(CENTER);
 }
 
 function draw() {
@@ -23,10 +24,9 @@ function draw() {
   h.fall(10);
   
   push();
-  translate(h.getX()-h.getR(),h.getY()-h.getR());
+  translate(h.getX(),h.getY());
   rotate(angle);
-  rectMode(CENTER);
-  rect(30,0,30,2);
+  rect(0,0,30,2);
   pop();
   angle += 20;
     
