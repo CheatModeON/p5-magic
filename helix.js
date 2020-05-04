@@ -24,7 +24,7 @@ function draw() {
   h.fall(10);
   
   push();
-  translate(h.getX()-10,h.getY()+20);
+  translate(h.getX()-20,h.getY()-20);
   rotate(angle);
   rect(0,0,30,2);
     
@@ -32,7 +32,7 @@ function draw() {
   
   if(mouseIsPressed){
     h.fly(15);
-    angle += 40;
+    angle += 70;
   }
   
   
