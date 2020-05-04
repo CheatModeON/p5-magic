@@ -26,7 +26,7 @@ function draw() {
   h.display();
   r.playspeed(5);
   h.fall(10);
-  var vol = mic.getLevel();
+  let vol = mic.getLevel();
   
   push();
   translate(h.getX()-20,h.getY()-20);
