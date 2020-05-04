@@ -23,7 +23,7 @@ function setup() {
   rectMode(CENTER);
   
   let div = createDiv('').size(100, 100);
-  div.html('Helix - The Game');
+  div.html('<h1>Helix - The Game<h1>');
 }
 
 function draw() {
