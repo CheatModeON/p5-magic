@@ -25,16 +25,16 @@ function draw() {
   
   push();
   translate(h.getX()-10,h.getY()+20);
+  rotate(angle);
   rect(0,0,30,2);
     
+  pop();
   
   if(mouseIsPressed){
     h.fly(15);
-    rotate(angle);
+    angle += 40;
   }
   
-  pop();
-  angle += 40;
   
   if(h.getY()<h.r){
     //h.setY(h.r);
