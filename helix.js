@@ -30,7 +30,7 @@ function setup() {
 function draw() {
   background(220);
   
-  
+  fill(255);
   
   r.display();
   h.display();
@@ -89,8 +89,8 @@ function draw() {
     score += 1;
   }
   
+  textSize(22);
   text("score: "+nfc(score,0),10,20);
-  
   
   fill(0);
   let y = height - vol * height;
