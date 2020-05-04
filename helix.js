@@ -1,5 +1,6 @@
 let img;
 let angle = 0;
+let charge = 100;
 function preload() {
   img = loadImage('assets/helicopter.png');
 }
@@ -32,8 +33,15 @@ function draw() {
   
   if(mouseIsPressed){
     h.fly(15);
-    angle += 70;
+    if(charge<90){
+      charge += 10;
+    }
+  } else {
+    if(charge>10){
+      charge -= 10;
+    }
   }
+  angle = charge;
   
   
   if(h.getY()<h.r){
