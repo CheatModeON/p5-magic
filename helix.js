@@ -98,7 +98,9 @@ function draw() {
   rect(20+barsize/2,50,barsize,10);
   line(20+threshold * barsize, 50, 20+threshold * barsize, 60);
   fill(0);
-  let x = 20+vol * barsize;
+  let actual = map(vol,0,threshold,0,1);
+  let x = 20+actual * barsize;
+  //let x = 20+vol * barsize;
   ellipse(x, 50, 10, 10);
 }
 
