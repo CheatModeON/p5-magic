@@ -112,7 +112,7 @@ function draw() {
 
     let barsize=100;
     noStroke()
-    rect(20+barsize/2,53,barsize,5, 4, 4);
+    rect(20+barsize/2,50,barsize,5, 5, 5);
     fill(0);
 
     if(vol>threshold) {
@@ -120,7 +120,7 @@ function draw() {
     }
     let actual = map(vol,0,threshold,0,1,true);
     let x = 20+actual * barsize;
-    ellipse(x, 50, 10, 10);
+    ellipse(x, 55, 10, 10);
   }
 }
 
