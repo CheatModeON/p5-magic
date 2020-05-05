@@ -1,4 +1,3 @@
-//
 let mic;
 let img;
 let angle = 0;
@@ -25,12 +24,10 @@ function setup() {
   r = new Rock();
   angleMode(DEGREES);
   rectMode(CENTER);
-  
 }
 
 function draw() {
   background(220);
-  
   fill(255);
   
   r.display();
@@ -73,7 +70,21 @@ function draw() {
     score=0;
   }
   
-  var d = dist(h.x, h.y, r.x+r.size/2, r.y+r.size/2);
+  var rect1 = {x: 5, y: 5, width: 50, height: 50}
+  var rect2 = {x: 20, y: 10, width: 10, height: 10}
+
+  if (r.getX() < h.getX() + h.getSize() &&
+     r.getX() + r.getSize() > h.getX() &&
+     r.getY() < h.getY() + h.getSize() &&
+     r.getY() + r.getSize() > h.getY()) {
+      // collision detected!
+    r.setX(width);
+    r.setY(random(0,height));
+    r.setSize(random(50,100));
+    score = 0;
+  }
+  
+  /*var d = dist(h.x, h.y, r.x+r.size/2, r.y+r.size/2);
   if (d < h.r + (r.size/2)) {
     //fill(150);
     //fill(changeColor());
@@ -81,7 +92,7 @@ function draw() {
     r.setY(random(0,height));
     r.setSize(random(50,100));
     score = 0;
-  }
+  }*/
   
   if(r.getX()<0){
     r.setX(width);
@@ -107,14 +118,14 @@ function draw() {
 function Helicopter(){
   this.x = random(100, 175);
   this.y = random(height);
-  this.r = 25;
+  this.size = 50;
   this.col = color(255);
   
   this.display = function() {
     //ellipse(this.x, this.y, this.r*2);
     //fill(this.col);
     
-    image(img, this.x-this.r, this.y-this.r, this.r*2, this.r*2);
+    image(img, this.x, this.y, this.size, this.size);
   }
   this.fall = function(d) {
     this.y=this.y+d;
@@ -132,8 +143,8 @@ function Helicopter(){
   this.getX = function() {
     return this.x;
   }
-  this.getR = function() {
-    return this.r;
+  this.getSize = function() {
+    return this.size;
   }
   
   this.changeColor = function() {
