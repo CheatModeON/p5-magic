@@ -1,10 +1,11 @@
 let mic;
-let img;
+let h_img, r_img;
 let angle = 0;
 let charge = 0;
 let threshold = 0.05;
 function preload() {
-  img = loadImage('assets/helicopter.png');
+  h_img = loadImage('assets/helicopter.png');
+  r_img = loadImage('assets/rock.png');
 }
 
 let d=100;
@@ -129,7 +130,7 @@ function Helicopter(){
   this.display = function() {
     //ellipse(this.x, this.y, this.r*2);
     //fill(this.col);
-    image(img, this.x-this.size/2, this.y-this.size/2, this.size, this.size);
+    image(h_img, this.x-this.size/2, this.y-this.size/2, this.size, this.size);
   }
   this.fall = function(d) {
     this.y=this.y+d;
@@ -153,8 +154,9 @@ function Rock(){
   this.col = color(255);
   
   this.display = function() {
-    rect(this.x, this.y, this.size, this.size,10,10);
-    fill(this.col);
+    image(r_img, this.x-this.size/2, this.y-this.size/2, this.size, this.size);
+    //rect(this.x, this.y, this.size, this.size,10,10);
+    //fill(this.col);
   }
   this.playspeed = function(d) {
     this.x=this.x-d;
