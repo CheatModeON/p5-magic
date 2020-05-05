@@ -48,7 +48,7 @@ function draw() {
     text("SCORE: "+score,width/2,height/2+50);
     
     if(highscore>0){
-    	text("NEW HIGHSCORE!!!",width/2,height/2 + 100);
+    	text("NEW HIGHSCORE!!!",width/2,height/2 - 100);
     }
     noLoop();
   } else {
