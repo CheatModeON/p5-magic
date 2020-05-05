@@ -54,6 +54,7 @@ function draw() {
     rect(0,0,15,2,5,5);
     pop();
 
+    // when to fly
     if(mouseIsPressed || vol > threshold){
       h.fly(15);
       if(charge < 70){
@@ -84,11 +85,11 @@ function draw() {
       reset=1;
     }
 
+    // collision detection
     if (r.x < h.x + h.size &&
        r.x + r.size > h.x &&
        r.y < h.y + h.size &&
        r.y + r.size > h.y) {
-        // collision detected!
       r.setX(width);
       r.setY(random(0,height));
       r.setSize(random(50,100));
@@ -97,7 +98,7 @@ function draw() {
       reset=1;
     }
 
-    if(r.x<-r.size){
+    if(r.x < -r.size){
       r.setX(width);
       r.setY(random(0,height));
       r.setSize(random(50,100));
@@ -162,7 +163,7 @@ function Rock(){
       noStroke();
       let ran = random(10,this.size);
       colorMode(HSB);
-      fill(i,255,255);
+      fill(i*25,255,255);
       ellipse(this.history[i].x+random(30,60),this.history[i].y+random(-10,10),ran,ran);
     }
     colorMode(RGB);
