@@ -58,7 +58,7 @@ function draw() {
       x2 -= scrollSpeed;
 
       if (x1 > width){
-        x1 = 0;
+        x1 = -width;
       }
       if (x2 < -width){
         x2 = width;
