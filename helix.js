@@ -50,6 +50,7 @@ function draw() {
     if(highscore>0){
     	text("NEW HIGHSCORE!!!",width/2,height/2 - 100);
     }
+    score = 0;
     noLoop();
   } else {
     background(220);
@@ -151,7 +152,6 @@ function gameOver(){
   if(score>highscore){
     highscore = score;
   }
-  score = 0;
   reset=1;
   r.history = [];
 }
