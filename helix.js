@@ -120,7 +120,7 @@ function draw() {
     }
     let actual = map(vol,0,threshold,0,1,true);
     let x = 20+actual * barsize;
-    ellipse(x, 55, 10, 10);
+    ellipse(x, 50, 10, 10);
   }
 }
 
