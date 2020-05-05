@@ -174,6 +174,9 @@ function Rock(){
   this.setY = function(y) {
     this.y = y;
   }
+  this.getSize = function() {
+    return this.size;
+  }
   this.setSize = function(s) {
     this.size = s;
   }
