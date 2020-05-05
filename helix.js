@@ -56,7 +56,7 @@ function draw() {
 	  pop();
 
       x1 -= scrollSpeed;
-      x2 -= scrollSpeed;
+      x2 += scrollSpeed;
 
       if (x1 < -width){
         x1 = width;
