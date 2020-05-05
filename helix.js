@@ -167,7 +167,7 @@ function Rock(){
       noStroke();
       colorMode(HSB);
       fill(i*5,255,255-(i*25));
-      ellipse(this.history[i].x+random(30,60),this.history[i].y+random(-10,10),random(10,this.size),ran);
+      ellipse(this.history[i].x+random(30,60),this.history[i].y+random(-10,10),random(10,this.size));
     }
     colorMode(RGB);
     image(r_img, this.x-this.size/2, this.y-this.size/2, this.size, this.size);
