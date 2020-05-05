@@ -1,4 +1,4 @@
-
+//
 let mic;
 let img;
 let angle = 0;
