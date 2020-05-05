@@ -18,6 +18,7 @@ function preload() {
 let d=100;
 let start;
 let score = 0;
+let highscore = 0;
 let reset = 1;
 
 function setup() {
@@ -43,6 +44,10 @@ function draw() {
     textSize(42);
     textAlign(CENTER);
     text("CLICK TO PLAY",width/2,height/2);
+    if(highscore>0){
+    	text("HIGHSCORE: "+highscore,width/2,height/2 + 20);
+    }
+	    
     noLoop();
   } else {
     background(220);
@@ -94,24 +99,13 @@ function draw() {
     }
     angle = angle + charge;
 
-
     if(h.y<h.size/2){
       //h.setY(h.r);
-      h.setY(height/2);
-      r.setX(width);
-      r.setY(random(0,height));
-      score=0;
-      reset=1;
-      r.history = [];
+      gameOver();
     }
     if(h.y>height-h.size/2){
       //h.setY(height-h.r);
-      h.setY(height/2);
-      r.setX(width);
-      r.setY(random(0,height));
-      score=0;
-      reset=1;
-      r.history = [];
+      gameOver();
     }
 
     // collision detection
@@ -119,13 +113,7 @@ function draw() {
        r.x + r.size > h.x &&
        r.y < h.y + h.size &&
        r.y + r.size > h.y) {
-      r.setX(width);
-      r.setY(random(0,height));
-      r.setSize(random(50,100));
-      h.setY(height/2);
-      score = 0;
-      reset=1;
-      r.history = [];
+      gameOver();
     }
 
     if(r.x < -r.size){
@@ -152,6 +140,19 @@ function draw() {
     let x = 20+actual * barsize;
     ellipse(x, 50, 10, 10);
   }
+}
+
+function gameOver(){
+  r.setX(width);
+  r.setY(random(0,height));
+  r.setSize(random(50,100));
+  h.setY(height/2);
+  if(score>highscore){
+    highscore = score;
+  }
+  score = 0;
+  reset=1;
+  r.history = [];
 }
 
 function Helicopter(){
