@@ -38,7 +38,7 @@ function draw() {
   
   // draw the propeller
   push();
-  translate(h.getX()+20,h.getY()+20);
+  translate(h.getX()+5,h.getY()+5);
   rotate(angle);
   rect(0,0,15,2,5,5);
   pop();
@@ -71,9 +71,6 @@ function draw() {
     score=0;
   }
   
-  var rect1 = {x: 5, y: 5, width: 50, height: 50}
-  var rect2 = {x: 20, y: 10, width: 10, height: 10}
-
   if (r.getX() < h.getX() + h.getSize() &&
      r.getX() + r.getSize() > h.getX() &&
      r.getY() < h.getY() + h.getSize() &&
@@ -117,8 +114,8 @@ function draw() {
 }
 
 function Helicopter(){
-  this.x = random(100, 175);
-  this.y = random(height);
+  this.x = 200;
+  this.y = height/2;
   this.size = 50;
   this.col = color(255);
   
@@ -138,11 +135,11 @@ function Helicopter(){
   this.setY = function(y) {
     this.y = y;
   }
-  this.getY = function() {
-    return this.y;
-  }
   this.getX = function() {
     return this.x;
+  }
+  this.getY = function() {
+    return this.y;
   }
   this.getSize = function() {
     return this.size;
