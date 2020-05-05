@@ -157,7 +157,7 @@ function Rock(){
   this.display = function() {
     this.history.push(createVector(this.x,this.y));
     for(var i=0; i<this.history.length; i++){
-      tint(255, i*10);
+      tint(255, i*50);
       image(r_img, this.history[i].x,this.history[i].y,this.size,this.size);
     }
     tint(255, 0);
@@ -165,7 +165,7 @@ function Rock(){
     //rect(this.x, this.y, this.size, this.size,10,10);
     //fill(this.col);
     
-    if(this.history.length>25) {
+    if(this.history.length>5) {
       this.history.splice(0,1);
     }
   }
