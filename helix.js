@@ -155,7 +155,7 @@ function Rock(){
   this.history = [];
   
   this.display = function() {
-    this.history.push(new Vector(this.x,this.y));
+    this.history.push(createVector(this.x,this.y));
     image(r_img, this.x-this.size/2, this.y-this.size/2, this.size, this.size);
     //rect(this.x, this.y, this.size, this.size,10,10);
     //fill(this.col);
