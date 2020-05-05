@@ -108,6 +108,8 @@ function draw() {
   rect(20+barsize/2,50,barsize,10);
   fill(0);
   let actual = map(vol,0,threshold,0,1);
+  console.log("vol: "+vol);
+  console.log("actual: "+actual);
   let x = 20+actual * barsize;
   //let x = 20+vol * barsize;
   ellipse(x, 50, 10, 10);
