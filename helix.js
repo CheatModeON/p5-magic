@@ -47,7 +47,7 @@ function draw() {
     text("CLICK TO PLAY",width/2,height/2);
     text("SCORE: "+score,width/2,height/2+50);
     
-    if(score==highscore){
+    if(score==highscore && highscore > 0){
     	text("NEW HIGHSCORE!!!",width/2,height/2 - 100);
     }
     score = 0;
