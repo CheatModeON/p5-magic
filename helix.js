@@ -13,7 +13,7 @@ let score = 0;
 
 function setup() {
   userStartAudio();
-  let title = select('#title');
+  let title = select('#title1');
   title.html('Helix - The Game');
   
   mic = new p5.AudioIn();
