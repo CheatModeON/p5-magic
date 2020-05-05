@@ -10,6 +10,7 @@ function preload() {
 let d=100;
 let start;
 let score = 0;
+let reset = 1;
 
 function setup() {
   userStartAudio();
@@ -25,15 +26,15 @@ function setup() {
   angleMode(DEGREES);
   rectMode(CENTER);
   
-  
-  background(220);
-  textSize(42);
-  text("CLICK TO PLAY",width/2,height/2);
-  noLoop();
-  
 }
 
 function draw() {
+  if(reset==1){
+    background(220);
+    textSize(42);
+    text("CLICK TO PLAY",width/2,height/2);
+    noLoop();
+  }
   background(220);
   fill(255);
   
@@ -165,6 +166,7 @@ function Rock(){
 
 
 function mousePressed() {
+  reset = 0;
   userStartAudio();
   loop();
 }
