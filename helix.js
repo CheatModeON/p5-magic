@@ -112,7 +112,7 @@ function draw() {
     fill(255)
     let barsize=100;
     noStroke()
-    rect(20+barsize/2,50,barsize,10);
+    rect(20+barsize/2,53,barsize,5, 4, 4);
     fill(0);
 
     if(vol>threshold) {
