@@ -161,15 +161,16 @@ function Rock(){
     for(var i=0; i<this.history.length; i++){
       noStroke();
       let ran = random(10,this.size);
-      //colorMode(HSB);
+      colorMode(HSB);
       fill(i,255,255);
       ellipse(this.history[i].x+random(30,60),this.history[i].y+random(-10,10),ran,ran);
     }
+    colorMode(RGB);
     image(r_img, this.x-this.size/2, this.y-this.size/2, this.size, this.size);
     //rect(this.x, this.y, this.size, this.size,10,10);
     //fill(this.col);
     
-    if(this.history.length>5) {
+    if(this.history.length>10) {
       this.history.splice(0,1);
     }
   }
