@@ -38,7 +38,7 @@ function draw() {
   
   // draw the propeller
   push();
-  translate(h.x+5,h.y+5);
+  translate(h.x-h.size/2+5,h.y-h.size/2+5);
   rotate(angle);
   rect(0,0,15,2,5,5);
   pop();
