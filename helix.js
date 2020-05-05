@@ -12,7 +12,7 @@ var scrollSpeed = 2;
 function preload() {
   h_img = loadImage('assets/helicopter.png');
   r_img = loadImage('assets/rock.png');
-	bgImg = loadImage("bg.jpg");
+	bgImg = loadImage("assets/bg.jpg");
 }
 
 let d=100;
