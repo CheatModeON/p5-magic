@@ -107,7 +107,7 @@ function draw() {
   let barsize=100;
   rect(20+barsize/2,50,barsize,10);
   fill(0);
-  let actual = map(vol,0,threshold,0,1);
+  let actual = map(vol,0,threshold,0,1,true);
   console.log("vol: "+vol);
   console.log("actual: "+actual);
   let x = 20+actual * barsize;
