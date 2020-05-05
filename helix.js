@@ -100,7 +100,6 @@ function draw() {
       r.setY(random(0,height));
       r.setSize(random(50,100));
       score += 1;
-      reset=1;
     }
 
     textSize(22);
