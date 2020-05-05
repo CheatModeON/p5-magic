@@ -11,7 +11,7 @@ let dir = [1,1,1,1,1,1,1,1];
 let show_lines = 0;
 
 function setup() {  
-  let title = select('#title');
+  let title = select('#title2');
   title.html('Circle Rotation Illusion');
   
   createCanvas(r*2, r*2);
