@@ -47,8 +47,13 @@ function draw() {
   } else {
     background(220);
     
-    	image(bgImg, x1, 0, width, height);
+    image(bgImg, x1, 0, width, height);
+	  
+	  push();
+	translate(width,0); // move to far corner
+ 	scale(-1.0,1.0);    // flip x-axis backwards
       image(bgImg, x2, 0, width, height);
+	  pop();
 
       x1 -= scrollSpeed;
       x2 -= scrollSpeed;
@@ -189,7 +194,7 @@ function Rock(){
       noStroke();
       colorMode(HSB);
       fill(70-(i*7),255,255,i/10);
-      ellipse(this.history[i].x + random(30,60), this.history[i].y + random(-5,5), this.size-i*8);
+      ellipse(this.history[i].x + random(20,30), this.history[i].y + random(-5,5), this.size-i*8);
     }
     colorMode(RGB);
     image(r_img, this.x-this.size/2, this.y - this.size/2 + random(-5,5), this.size, this.size);
