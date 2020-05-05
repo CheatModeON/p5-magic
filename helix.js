@@ -163,7 +163,7 @@ function Rock(){
   
   this.display = function() {
     this.history.push(createVector(this.x,this.y));
-    for(var i=this.history.length; i>=0; i--){
+    for(var i=this.history.length-1; i>=0; i--){
       noStroke();
       colorMode(HSB);
       fill(i*5,255,255-(i*25));
