@@ -193,7 +193,7 @@ function Rock(){
       noStroke();
       colorMode(HSB);
       fill(70-(i*7),255,255,i/10);
-      ellipse(this.history[i].x + random(20,30), this.history[i].y + random(-5,5), this.size-i*8);
+      ellipse(this.history[i].x + random(20,30), this.history[i].y + random(-5,5), this.size-i*5);
     }
     colorMode(RGB);
     image(r_img, this.x-this.size/2, this.y - this.size/2 + random(-5,5), this.size, this.size);
