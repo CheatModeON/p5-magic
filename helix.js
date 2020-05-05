@@ -61,7 +61,7 @@ function draw() {
       if (x1 < -width){
         x1 = width;
       }
-      if (x2 < -width){
+      if (x2 > width){
         x2 = width;
       }
     
