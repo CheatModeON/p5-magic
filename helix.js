@@ -122,7 +122,7 @@ function Helicopter(){
   this.display = function() {
     //ellipse(this.x, this.y, this.r*2);
     //fill(this.col);
-    rect(this.x, this.y, this.size, this.size);
+    rect(this.x+this.size/2, this.y+this.size/2, this.size, this.size);
     image(img, this.x, this.y, this.size, this.size);
   }
   this.fall = function(d) {
