@@ -24,6 +24,10 @@ function setup() {
   r = new Rock();
   angleMode(DEGREES);
   rectMode(CENTER);
+  noLoop();
+  
+  textSize(42);
+  text("CLICK TO PLAY",width/2,height/2);
 }
 
 function draw() {
@@ -83,16 +87,6 @@ function draw() {
     score = 0;
   }
   
-  /*var d = dist(h.x, h.y, r.x+r.size/2, r.y+r.size/2);
-  if (d < h.r + (r.size/2)) {
-    //fill(150);
-    //fill(changeColor());
-    r.setX(width);
-    r.setY(random(0,height));
-    r.setSize(random(50,100));
-    score = 0;
-  }*/
-  
   if(r.x<0){
     r.setX(width);
     r.setY(random(0,height));
@@ -113,7 +107,6 @@ function draw() {
   }
   let actual = map(vol,0,threshold,0,1,true);
   let x = 20+actual * barsize;
-  //let x = 20+vol * barsize;
   ellipse(x, 50, 10, 10);
 }
 
@@ -126,7 +119,6 @@ function Helicopter(){
   this.display = function() {
     //ellipse(this.x, this.y, this.r*2);
     //fill(this.col);
-    rect(this.x, this.y, this.size, this.size);
     image(img, this.x-this.size/2, this.y-this.size/2, this.size, this.size);
   }
   this.fall = function(d) {
@@ -171,4 +163,5 @@ function Rock(){
 
 function mousePressed() {
   userStartAudio();
+  loop();
 }
