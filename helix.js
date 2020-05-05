@@ -157,10 +157,9 @@ function Rock(){
   this.display = function() {
     this.history.push(createVector(this.x,this.y));
     for(var i=0; i<this.history.length; i++){
-      tint(255, i*50);
-      image(r_img, this.history[i].x,this.history[i].y,this.size,this.size);
+      noStroke();
+      rect(this.history[i].x+random(10,20),this.history[i].y+random(-10,10),this.size,this.size);
     }
-    tint(255, 0);
     image(r_img, this.x-this.size/2, this.y-this.size/2, this.size, this.size);
     //rect(this.x, this.y, this.size, this.size,10,10);
     //fill(this.col);
