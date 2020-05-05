@@ -164,7 +164,7 @@ function Rock(){
       noStroke();
       let ran = random(10,this.size);
       colorMode(HSB);
-      fill(255,i*25,255);
+      fill(i*25,255,255);
       ellipse(this.history[i].x+random(30,60),this.history[i].y+random(-10,10),ran,ran);
     }
     colorMode(RGB);
