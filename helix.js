@@ -152,11 +152,19 @@ function Rock(){
   this.y = random(0,height);
   this.size = 100;
   this.col = color(255);
+  this.history = [];
   
   this.display = function() {
+    this.history.push(new Vector(this.x,this.y));
     image(r_img, this.x-this.size/2, this.y-this.size/2, this.size, this.size);
     //rect(this.x, this.y, this.size, this.size,10,10);
     //fill(this.col);
+    for(var i=0; i<this.history.length; i++){
+      ellipse(this.history[i].x,this.history[i].y,10,10);
+    }
+    if(this.history.length>25) {
+      this.history.splice(0,1);
+    }
   }
   this.playspeed = function(d) {
     this.x=this.x-d;
