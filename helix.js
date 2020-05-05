@@ -96,7 +96,7 @@ function draw() {
       reset=1;
     }
 
-    if(r.x<0){
+    if(r.x<-r.size){
       r.setX(width);
       r.setY(random(0,height));
       r.setSize(random(50,100));
