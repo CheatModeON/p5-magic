@@ -12,7 +12,7 @@ var scrollSpeed = 2;
 function preload() {
   h_img = loadImage('assets/helicopter.png');
   r_img = loadImage('assets/rock.png');
-	bgImg = loadImage("assets/bg.jpg");
+  bgImg = loadImage("assets/bg.jpg");
 }
 
 let d=100;
@@ -47,21 +47,20 @@ function draw() {
   } else {
     background(220);
     
-    image(bgImg, x1, 0, width, height);
-	  
 	  push();
 	translate(width,0); // move to far corner
  	scale(-1.0,1.0);    // flip x-axis backwards
-      image(bgImg, x2, 0, width, height);
+    image(bgImg, x1, 0, width, height);
 	  pop();
+      image(bgImg, x2, 0, width, height);
 
       x1 -= scrollSpeed;
-      x2 += scrollSpeed;
+      x2 -= scrollSpeed;
 
       if (x1 < -width){
         x1 = width;
       }
-      if (x2 > width){
+      if (x2 < -width){
         x2 = width;
       }
     
