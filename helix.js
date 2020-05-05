@@ -76,6 +76,7 @@ function draw() {
       r.setY(random(0,height));
       score=0;
       reset=1;
+      r.history = [];
     }
     if(h.y>height-h.size/2){
       //h.setY(height-h.r);
@@ -84,6 +85,7 @@ function draw() {
       r.setY(random(0,height));
       score=0;
       reset=1;
+      r.history = [];
     }
 
     // collision detection
@@ -97,6 +99,7 @@ function draw() {
       h.setY(height/2);
       score = 0;
       reset=1;
+      r.history = [];
     }
 
     if(r.x < -r.size){
