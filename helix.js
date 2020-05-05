@@ -163,10 +163,10 @@ function Rock(){
   
   this.display = function() {
     this.history.push(createVector(this.x,this.y));
-    for(var i=this.history.length-1; i>=0; i--){
+    for(var i=0; i<this.history.length; i++){
       noStroke();
       colorMode(HSL);
-      fill(i*5,255,255-(i*25));
+      fill(205+(i*5),255,i*25);
       ellipse(this.history[i].x+random(30,60),this.history[i].y+random(-10,10),random(10,this.size));
     }
     colorMode(RGB);
