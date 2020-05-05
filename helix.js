@@ -33,7 +33,7 @@ function draw() {
     background(220);
     textSize(42);
     textAlign(CENTER);
-    text("CLICK TO PLAY",width,height/2);
+    text("CLICK TO PLAY",width/2,height/2);
     noLoop();
   } else {
     background(220);
