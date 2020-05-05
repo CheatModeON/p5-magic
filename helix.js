@@ -24,10 +24,13 @@ function setup() {
   r = new Rock();
   angleMode(DEGREES);
   rectMode(CENTER);
-  noLoop();
   
+  
+  background(220);
   textSize(42);
   text("CLICK TO PLAY",width/2,height/2);
+  noLoop();
+  
 }
 
 function draw() {
