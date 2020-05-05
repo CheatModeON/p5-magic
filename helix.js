@@ -129,6 +129,8 @@ function draw() {
     textSize(22);
     textAlign(LEFT);
     text("score: "+nfc(score,0),20,30);
+    textAlign(RIGHT);
+    text("highscore: "+nfc(highscore,0),width-20,30);
 
     let barsize=100;
     noStroke()
