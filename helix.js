@@ -46,7 +46,7 @@ function draw() {
     textAlign(CENTER);
     text("CLICK TO PLAY",width/2,height/2);
     if(highscore>0){
-    	text("HIGHSCORE: "+highscore,width/2,height/2 + 20);
+    	text("HIGHSCORE: "+highscore,width/2,height/2 + 50);
     }
     noLoop();
   } else {
