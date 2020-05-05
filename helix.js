@@ -50,7 +50,7 @@ function draw() {
 	  push();
 	translate(width,0); // move to far corner
  	scale(-1.0,1.0);    // flip x-axis backwards
-    image(bgImg, x1, 0, width, height);
+    image(bgImg, x1, 0, width+5, height);
 	  pop();
       image(bgImg, x2, 0, width, height);
 
