@@ -3,9 +3,16 @@ let h_img, r_img;
 let angle = 0;
 let charge = 0;
 let threshold = 0.05;
+
+var bgImg;
+var x1 = 0;
+var x2;
+
+var scrollSpeed = 2;
 function preload() {
   h_img = loadImage('assets/helicopter.png');
   r_img = loadImage('assets/rock.png');
+	bgImg = loadImage("bg.jpg");
 }
 
 let d=100;
@@ -27,6 +34,7 @@ function setup() {
   angleMode(DEGREES);
   rectMode(CENTER);
   
+  x2 = width;
 }
 
 function draw() {
@@ -38,6 +46,20 @@ function draw() {
     noLoop();
   } else {
     background(220);
+    
+    	image(bgImg, x1, 0, width, height);
+      image(bgImg, x2, 0, width, height);
+
+      x1 -= scrollSpeed;
+      x2 -= scrollSpeed;
+
+      if (x1 < -width){
+        x1 = width;
+      }
+      if (x2 < -width){
+        x2 = width;
+      }
+    
     fill(255);
 
     r.display();
