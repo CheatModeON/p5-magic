@@ -56,14 +56,14 @@ function draw() {
   angle = angle + charge;
   
   
-  if(h.getY()<h.r){
+  if(h.getY()<0){
     //h.setY(h.r);
     h.setY(height/2);
     r.setX(width);
     r.setY(random(0,height));
     score=0;
   }
-  if(h.getY()>height-h.r){
+  if(h.getY()>height-h.size){
     //h.setY(height-h.r);
     h.setY(height/2);
     r.setX(width);
@@ -79,6 +79,7 @@ function draw() {
     r.setX(width);
     r.setY(random(0,height));
     r.setSize(random(50,100));
+    h.setY(height/2);
     score = 0;
   }
   
