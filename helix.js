@@ -166,22 +166,24 @@ function Rock(){
   this.playspeed = function(d) {
     this.x=this.x-d;
   }
-  this.getX = function() {
-    return this.x;
-  }
   this.setX = function(x) {
     this.x = x;
   }
   this.setY = function(y) {
     this.y = y;
   }
-  this.getSize = function() {
-    return this.size;
-  }
   this.setSize = function(s) {
     this.size = s;
   }
-  
+  this.getX = function() {
+    return this.x;
+  }
+  this.getY = function() {
+    return this.y;
+  }
+  this.getSize = function() {
+    return this.size;
+  }
 }
 
 
