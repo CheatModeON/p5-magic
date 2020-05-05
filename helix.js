@@ -31,7 +31,6 @@ function setup() {
 function draw() {
   if(reset==1){
     background(220);
-    fill(255);
     textSize(42);
     textAlign(CENTER);
     text("CLICK TO PLAY",50,height/2);
