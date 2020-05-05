@@ -101,15 +101,17 @@ function draw() {
   }
   
   textSize(22);
-  text("score: "+nfc(score,0),10,20);
+  text("score: "+nfc(score,0),20,20);
   
   fill(255)
   let barsize=100;
   rect(20+barsize/2,50,barsize,10);
   fill(0);
+  
+  if(vol>threshold) {
+    vol=threshold;
+  }
   let actual = map(vol,0,threshold,0,1,true);
-  console.log("vol: "+vol);
-  console.log("actual: "+actual);
   let x = 20+actual * barsize;
   //let x = 20+vol * barsize;
   ellipse(x, 50, 10, 10);
