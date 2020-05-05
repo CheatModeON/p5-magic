@@ -38,7 +38,7 @@ function draw() {
   
   // draw the propeller
   push();
-  translate(h.getX()+5,h.getY()+5);
+  translate(h.x+5,h.y+5);
   rotate(angle);
   rect(0,0,15,2,5,5);
   pop();
@@ -56,14 +56,14 @@ function draw() {
   angle = angle + charge;
   
   
-  if(h.getY()<0){
+  if(h.y<0){
     //h.setY(h.r);
     h.setY(height/2);
     r.setX(width);
     r.setY(random(0,height));
     score=0;
   }
-  if(h.getY()>height-h.size){
+  if(h.y>height-h.size){
     //h.setY(height-h.r);
     h.setY(height/2);
     r.setX(width);
@@ -71,10 +71,10 @@ function draw() {
     score=0;
   }
   
-  if (r.getX() < h.getX() + h.getSize() &&
-     r.getX() + r.getSize() > h.getX() &&
-     r.getY() < h.getY() + h.getSize() &&
-     r.getY() + r.getSize() > h.getY()) {
+  if (r.x < h.x + h.size &&
+     r.x + r.size > h.x &&
+     r.y < h.y + h.size &&
+     r.y + r.size > h.y) {
       // collision detected!
     r.setX(width);
     r.setY(random(0,height));
@@ -93,7 +93,7 @@ function draw() {
     score = 0;
   }*/
   
-  if(r.getX()<0){
+  if(r.x<0){
     r.setX(width);
     r.setY(random(0,height));
     r.setSize(random(50,100));
@@ -131,18 +131,8 @@ function Helicopter(){
   this.fly = function(d) {
     this.y=this.y-d;
   }
-  
   this.setY = function(y) {
     this.y = y;
-  }
-  this.getX = function() {
-    return this.x;
-  }
-  this.getY = function() {
-    return this.y;
-  }
-  this.getSize = function() {
-    return this.size;
   }
   
   this.changeColor = function() {
@@ -171,15 +161,6 @@ function Rock(){
   }
   this.setSize = function(s) {
     this.size = s;
-  }
-  this.getX = function() {
-    return this.x;
-  }
-  this.getY = function() {
-    return this.y;
-  }
-  this.getSize = function() {
-    return this.size;
   }
 }
 
