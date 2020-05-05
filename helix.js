@@ -41,23 +41,22 @@ function setup() {
 function draw() {
   if(reset==1){
     background(220);
+    image(bgImg, 0, 0, width, height);
     textSize(42);
     textAlign(CENTER);
     text("CLICK TO PLAY",width/2,height/2);
     if(highscore>0){
     	text("HIGHSCORE: "+highscore,width/2,height/2 + 20);
     }
-	    
     noLoop();
   } else {
     background(220);
-    
-	  push();
-	translate(width,0); // move to far corner
- 	scale(-1.0,1.0);    // flip x-axis backwards
+    push();
+    translate(width,0); // move to far corner
+    scale(-1.0,1.0);    // flip x-axis backwards
     image(bgImg, x1, 0, width+5, height);
-	  pop();
-      image(bgImg, x2, 0, width, height);
+    pop();
+    image(bgImg, x2, 0, width, height);
 
       x1 += scrollSpeed;
       x2 -= scrollSpeed;
