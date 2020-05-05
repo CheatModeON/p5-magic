@@ -3,6 +3,7 @@ let mic;
 let img;
 let angle = 0;
 let charge = 0;
+let threshold = 0.05;
 function preload() {
   img = loadImage('assets/helicopter.png');
 }
@@ -44,7 +45,7 @@ function draw() {
   rect(0,0,15,2,5,5);
   pop();
   
-  if(mouseIsPressed || vol > 0.05){
+  if(mouseIsPressed || vol > threshold){
     h.fly(15);
     if(charge < 70){
       charge += 1;
@@ -95,6 +96,7 @@ function draw() {
   fill(255)
   let barsize=100;
   rect(20+barsize/2,50,barsize,10);
+  line(20+threshold * barsize, 50, 20+threshold * barsize, 60);
   fill(0);
   let x = 20+vol * barsize;
   ellipse(x, 50, 10, 10);
