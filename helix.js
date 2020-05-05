@@ -105,7 +105,6 @@ function draw() {
   fill(255)
   let barsize=100;
   rect(20+barsize/2,50,barsize,10);
-  line(20+threshold * barsize, 50, 20+threshold * barsize, 60);
   fill(0);
   let actual = map(vol,0,threshold,0,1);
   let x = 20+actual * barsize;
