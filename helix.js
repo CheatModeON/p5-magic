@@ -104,12 +104,12 @@ function draw() {
       r.setSize(random(50,100));
       score += 1;
     }
-
+  
+    fill(255)
     textSize(22);
     textAlign(LEFT);
     text("score: "+nfc(score,0),20,30);
 
-    fill(255)
     let barsize=100;
     noStroke()
     rect(20+barsize/2,53,barsize,5, 4, 4);
@@ -163,7 +163,7 @@ function Rock(){
       noStroke();
       let ran = random(10,this.size);
       colorMode(HSB);
-      fill(i*25,255,255);
+      fill(255,255,i*25);
       ellipse(this.history[i].x+random(30,60),this.history[i].y+random(-10,10),ran,ran);
     }
     colorMode(RGB);
