@@ -34,84 +34,85 @@ function draw() {
     textSize(42);
     text("CLICK TO PLAY",width/2,height/2);
     noLoop();
-  }
-  background(220);
-  fill(255);
-  
-  r.display();
-  h.display();
-  r.playspeed(5);
-  h.fall(10);
-  let vol = mic.getLevel();
-  
-  // draw the propeller
-  push();
-  translate(h.x-h.size/2+5,h.y-h.size/2+5);
-  rotate(angle);
-  rect(0,0,15,2,5,5);
-  pop();
-  
-  if(mouseIsPressed || vol > threshold){
-    h.fly(15);
-    if(charge < 70){
-      charge += 1;
-    }
   } else {
-    if(charge > 10){
-      charge -= 3;
+    background(220);
+    fill(255);
+
+    r.display();
+    h.display();
+    r.playspeed(5);
+    h.fall(10);
+    let vol = mic.getLevel();
+
+    // draw the propeller
+    push();
+    translate(h.x-h.size/2+5,h.y-h.size/2+5);
+    rotate(angle);
+    rect(0,0,15,2,5,5);
+    pop();
+
+    if(mouseIsPressed || vol > threshold){
+      h.fly(15);
+      if(charge < 70){
+        charge += 1;
+      }
+    } else {
+      if(charge > 10){
+        charge -= 3;
+      }
     }
+    angle = angle + charge;
+
+
+    if(h.y<h.size/2){
+      //h.setY(h.r);
+      h.setY(height/2);
+      r.setX(width);
+      r.setY(random(0,height));
+      score=0;
+    }
+    if(h.y>height-h.size/2){
+      //h.setY(height-h.r);
+      h.setY(height/2);
+      r.setX(width);
+      r.setY(random(0,height));
+      score=0;
+    }
+
+    if (r.x < h.x + h.size &&
+       r.x + r.size > h.x &&
+       r.y < h.y + h.size &&
+       r.y + r.size > h.y) {
+        // collision detected!
+      r.setX(width);
+      r.setY(random(0,height));
+      r.setSize(random(50,100));
+      h.setY(height/2);
+      score = 0;
+    }
+
+    if(r.x<0){
+      r.setX(width);
+      r.setY(random(0,height));
+      r.setSize(random(50,100));
+      score += 1;
+    }
+
+    textSize(22);
+    text("score: "+nfc(score,0),20,20);
+
+    fill(255)
+    let barsize=100;
+    rect(20+barsize/2,50,barsize,10);
+    fill(0);
+
+    if(vol>threshold) {
+      vol=threshold;
+    }
+    let actual = map(vol,0,threshold,0,1,true);
+    let x = 20+actual * barsize;
+    ellipse(x, 50, 10, 10);
   }
-  angle = angle + charge;
-  
-  
-  if(h.y<h.size/2){
-    //h.setY(h.r);
-    h.setY(height/2);
-    r.setX(width);
-    r.setY(random(0,height));
-    score=0;
-  }
-  if(h.y>height-h.size/2){
-    //h.setY(height-h.r);
-    h.setY(height/2);
-    r.setX(width);
-    r.setY(random(0,height));
-    score=0;
-  }
-  
-  if (r.x < h.x + h.size &&
-     r.x + r.size > h.x &&
-     r.y < h.y + h.size &&
-     r.y + r.size > h.y) {
-      // collision detected!
-    r.setX(width);
-    r.setY(random(0,height));
-    r.setSize(random(50,100));
-    h.setY(height/2);
-    score = 0;
-  }
-  
-  if(r.x<0){
-    r.setX(width);
-    r.setY(random(0,height));
-    r.setSize(random(50,100));
-    score += 1;
-  }
-  
-  textSize(22);
-  text("score: "+nfc(score,0),20,20);
-  
-  fill(255)
-  let barsize=100;
-  rect(20+barsize/2,50,barsize,10);
-  fill(0);
-  
-  if(vol>threshold) {
-    vol=threshold;
-  }
-  let actual = map(vol,0,threshold,0,1,true);
-  let x = 20+actual * barsize;
-  ellipse(x, 50, 10, 10);
 }
 
 function Helicopter(){
