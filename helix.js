@@ -104,6 +104,7 @@ function draw() {
     }
 
     textSize(22);
+    textAlign(LEFT);
     text("score: "+nfc(score,0),20,20);
 
     fill(255)
