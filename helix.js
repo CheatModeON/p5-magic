@@ -51,6 +51,7 @@ function draw() {
     translate(h.x-h.size/2+5,h.y-h.size/2+5);
     rotate(angle);
     stroke(0);
+    fill(255)
     rect(0,0,15,2,5,5);
     pop();
 
