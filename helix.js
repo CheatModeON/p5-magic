@@ -36,8 +36,9 @@ function draw() {
   h.fall(10);
   let vol = mic.getLevel();
   
+  // draw the propeller
   push();
-  translate(h.getX()-20,h.getY()-20);
+  translate(h.getX()+20,h.getY()+20);
   rotate(angle);
   rect(0,0,15,2,5,5);
   pop();
@@ -124,7 +125,7 @@ function Helicopter(){
   this.display = function() {
     //ellipse(this.x, this.y, this.r*2);
     //fill(this.col);
-    
+    rect(this.x, this.y, this.size, this.size);
     image(img, this.x, this.y, this.size, this.size);
   }
   this.fall = function(d) {
