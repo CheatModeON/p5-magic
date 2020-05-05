@@ -50,6 +50,7 @@ function draw() {
     push();
     translate(h.x-h.size/2+5,h.y-h.size/2+5);
     rotate(angle);
+    stroke(0);
     rect(0,0,15,2,5,5);
     pop();
 
@@ -109,6 +110,7 @@ function draw() {
 
     fill(255)
     let barsize=100;
+    noStroke()
     rect(20+barsize/2,50,barsize,10);
     fill(0);
 
@@ -158,7 +160,7 @@ function Rock(){
     this.history.push(createVector(this.x,this.y));
     for(var i=0; i<this.history.length; i++){
       noStroke();
-      rect(this.history[i].x+random(10,20),this.history[i].y+random(-10,10),this.size,this.size);
+      ellipse(this.history[i].x+random(30,60),this.history[i].y+random(-10,10),this.size,this.size);
     }
     image(r_img, this.x-this.size/2, this.y-this.size/2, this.size, this.size);
     //rect(this.x, this.y, this.size, this.size,10,10);
