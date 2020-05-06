@@ -42,8 +42,9 @@ function setup() {
 
 function draw() {
   if(reset==1){
-    background(220);
-    image(bgImg, 0, 0, width, height);
+    //background(220);
+    //image(bgImg, 0, 0, width, height);
+    filter(BLUR, 3);
     textSize(42);
     textAlign(CENTER);
     text("CLICK TO PLAY",width/2,height/2);
@@ -56,7 +57,6 @@ function draw() {
     noLoop();
   } else {
     background(220);
-
     // background movement
     push();
     translate(width,0); // move to far corner
@@ -132,9 +132,7 @@ function draw() {
 
     // set the texts
     fill(255)
-    textSize(22);
-    textAlign(LEFT);
-    text("score: "+nfc(score,0),20,30);
+    shadowText(22, LEFT,"score: "+nfc(score,0),20,30);
     textAlign(RIGHT);
     text("highscore: "+nfc(highscore,0),width-20,30);
 
@@ -150,6 +148,14 @@ function draw() {
     let x = 20+actual * barsize;
     ellipse(x, 50, 10, 10);
   }
+}
+
+function shadowText(size, align, text, x, y){
+  textSize(22);
+  textAlign(LEFT);
+  text(text,x,y);
+  fill(255, 100);
+  text(text,x+10,y+10);
 }
 
 function gameOver(){
@@ -233,7 +239,6 @@ function Rock(){
     this.size = s;
   }
 }
-
 
 function mousePressed() {
   reset = 0;
