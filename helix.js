@@ -47,13 +47,11 @@ function draw() {
       image(bgImg, 0, 0, width, height);
     }
     filter(BLUR, 3);
-    textSize(42);
-    textAlign(CENTER);
-    text("CLICK TO PLAY",width/2,height/2);
-    text("SCORE: "+score,width/2,height/2+50);
+    shadowText(42, CENTER, "CLICK TO PLAY",width/2,height/2);
+    shadowText(42, CENTER, "SCORE: "+score,width/2,height/2+50);
 
     if(score==highscore && highscore > 0){
-    	text("NEW HIGHSCORE!!!",width/2,height/2 - 100);
+    	shadowText(42, CENTER, "NEW HIGHSCORE!!!",width/2,height/2 - 100);
     }
     score = 0;
     noLoop();
@@ -86,8 +84,8 @@ function draw() {
 
     // draw the propeller
     push();
-    rotate(h.angle);
     translate(h.x-h.size/2+5,h.y-h.size/2+5);
+    rotate(h.angle);
     rotate(angle);
     stroke(0);
     fill(255)
@@ -128,10 +126,8 @@ function draw() {
       r.setX(width); // it appears on the right edge
       r.setY(random(0,height));
       r.setSize(random(50,100));
+      score += 1;
     }
-
-    // score increases when helicopter passes the rock
-    if(r.x < h.x){score += 1;}
 
     // set the texts
     fill(255)
@@ -176,7 +172,7 @@ function Helicopter(){
   this.y = height/2;
   this.size = 50;
   this.col = color(255);
-  this.angle = 5;
+  this.angle = 1;
 
   this.display = function() {
     //ellipse(this.x, this.y, this.r*2);
@@ -188,11 +184,11 @@ function Helicopter(){
   }
   this.fall = function(d) {
     this.y=this.y+d;
-    this.angle = 5
+    this.angle = 1
   }
   this.fly = function(d) {
     this.y=this.y-d;
-    this.angle = -5;
+    this.angle = -1;
   }
   this.setY = function(y) {
     this.y = y;
