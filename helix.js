@@ -86,6 +86,7 @@ function draw() {
 
     // draw the propeller
     push();
+    rotate(h.angle);
     translate(h.x-h.size/2+5,h.y-h.size/2+5);
     rotate(angle);
     stroke(0);
@@ -134,15 +135,14 @@ function draw() {
 
     // set the texts
     fill(255)
-    shadowText(22, LEFT,"score: "+nfc(score,0),20,30);
-    textAlign(RIGHT);
-    text("highscore: "+nfc(highscore,0),width-20,30);
+    shadowText(22, LEFT, "score: "+nfc(score,0), 20, 30);
+    shadowText(22, RIGHT, "highscore: "+nfc(highscore,0), width-20, 30);
 
     // set the volume bar
     let barsize=100;
     noStroke()
     rect(20+barsize/2,50,barsize,5, 5, 5);
-    fill(0);
+    fill(0,100);
     if(vol>threshold) {
       vol=threshold;
     }
@@ -153,11 +153,10 @@ function draw() {
 }
 
 function shadowText(size, align, txt, x, y){
+  fill(255, 100);
   textSize(22);
   textAlign(LEFT);
   text(txt,x,y);
-  fill(255, 100);
-  text(txt,x+10,y+10);
 }
 
 function gameOver(){
@@ -177,7 +176,7 @@ function Helicopter(){
   this.y = height/2;
   this.size = 50;
   this.col = color(255);
-  this.angle = -5;
+  this.angle = 5;
 
   this.display = function() {
     //ellipse(this.x, this.y, this.r*2);
@@ -189,11 +188,11 @@ function Helicopter(){
   }
   this.fall = function(d) {
     this.y=this.y+d;
-    this.angle = -5
+    this.angle = 5
   }
   this.fly = function(d) {
     this.y=this.y-d;
-    this.angle = 5;
+    this.angle = -5;
   }
   this.setY = function(y) {
     this.y = y;
