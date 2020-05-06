@@ -18,7 +18,7 @@ function preload() {
 }
 
 let d=100;
-let start;
+let start=0;
 let score = 0;
 let highscore = 0;
 let reset = 1;
@@ -43,7 +43,9 @@ function setup() {
 function draw() {
   if(reset==1){
     //background(220);
-    //image(bgImg, 0, 0, width, height);
+    if(start==0){
+      image(bgImg, 0, 0, width, height);
+    }
     filter(BLUR, 3);
     textSize(42);
     textAlign(CENTER);
