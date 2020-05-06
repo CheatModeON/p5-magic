@@ -1,3 +1,5 @@
+// Original game: https://www.helicoptergame.net
+
 let mic;
 let h_img, r_img;
 let angle = 0;
@@ -25,16 +27,16 @@ function setup() {
   userStartAudio();
   let title = select('#title');
   title.html('Helix - The Game');
-  
+
   mic = new p5.AudioIn();
   mic.start();
-  
+
   createCanvas(800, 600);
   h = new Helicopter();
   r = new Rock();
   angleMode(DEGREES);
   rectMode(CENTER);
-  
+
   x2 = width;
 }
 
@@ -46,7 +48,7 @@ function draw() {
     textAlign(CENTER);
     text("CLICK TO PLAY",width/2,height/2);
     text("SCORE: "+score,width/2,height/2+50);
-    
+
     if(score==highscore && highscore > 0){
     	text("NEW HIGHSCORE!!!",width/2,height/2 - 100);
     }
@@ -54,29 +56,30 @@ function draw() {
     noLoop();
   } else {
     background(220);
+
+    // background movement
     push();
     translate(width,0); // move to far corner
     scale(-1.0,1.0);    // flip x-axis backwards
     image(bgImg, x1, 0, width+5, height);
     pop();
     image(bgImg, x2, 0, width, height);
+    x1 += scrollSpeed;
+    x2 -= scrollSpeed;
+    if (x1 > width){
+      x1 = -width;
+    }
+    if (x2 < -width){
+      x2 = width;
+    }
+    // background movement
 
-      x1 += scrollSpeed;
-      x2 -= scrollSpeed;
-
-      if (x1 > width){
-        x1 = -width;
-      }
-      if (x2 < -width){
-        x2 = width;
-      }
-    
     fill(255);
 
     r.display();
     h.display();
-    r.playspeed(5);
-    h.fall(10);
+    r.playspeed(5); // set play speed
+    h.fall(8);     // set falling speed
     let vol = mic.getLevel();
 
     // draw the propeller
@@ -90,27 +93,26 @@ function draw() {
 
     // when to fly
     if(mouseIsPressed || vol > threshold){
-      h.fly(15);
+      h.fly(15); // set fly speed
       if(charge < 70){
-        charge += 1;
+        charge += 1; // propeller motion
       }
     } else {
       if(charge > 10){
-        charge -= 3;
+        charge -= 3; // propeller motion
       }
     }
     angle = angle + charge;
 
+    // collision detection (with top-bottom)
     if(h.y<h.size/2){
-      //h.setY(h.r);
       gameOver();
     }
     if(h.y>height-h.size/2){
-      //h.setY(height-h.r);
       gameOver();
     }
 
-    // collision detection
+    // collision detection (with a rock)
     if (r.x < h.x + h.size &&
        r.x + r.size > h.x &&
        r.y < h.y + h.size &&
@@ -118,13 +120,17 @@ function draw() {
       gameOver();
     }
 
+    // reset rock's random position and size
     if(r.x < -r.size){
-      r.setX(width);
+      r.setX(width); // it appears on the right edge
       r.setY(random(0,height));
       r.setSize(random(50,100));
-      score += 1;
     }
-  
+
+    // score increases when helicopter passes the rock
+    if(r.x < h.x){score += 1;}
+
+    // set the texts
     fill(255)
     textSize(22);
     textAlign(LEFT);
@@ -132,11 +138,11 @@ function draw() {
     textAlign(RIGHT);
     text("highscore: "+nfc(highscore,0),width-20,30);
 
+    // set the volume bar
     let barsize=100;
     noStroke()
     rect(20+barsize/2,50,barsize,5, 5, 5);
     fill(0);
-
     if(vol>threshold) {
       vol=threshold;
     }
@@ -163,22 +169,28 @@ function Helicopter(){
   this.y = height/2;
   this.size = 50;
   this.col = color(255);
-  
+  this.angle = -5;
+
   this.display = function() {
     //ellipse(this.x, this.y, this.r*2);
     //fill(this.col);
+    push();
+    rotate(this.angle);
     image(h_img, this.x-this.size/2, this.y-this.size/2, this.size, this.size);
+    pop();
   }
   this.fall = function(d) {
     this.y=this.y+d;
+    this.angle = -5
   }
   this.fly = function(d) {
     this.y=this.y-d;
+    this.angle = 5;
   }
   this.setY = function(y) {
     this.y = y;
   }
-  
+
   this.changeColor = function() {
     this.col = color(150);
   }
@@ -190,7 +202,7 @@ function Rock(){
   this.size = 100;
   this.col = color(255);
   this.history = [];
-  
+
   this.display = function() {
     this.history.push(createVector(this.x,this.y));
     for(var i=0; i<this.history.length; i++){
@@ -203,7 +215,7 @@ function Rock(){
     image(r_img, this.x-this.size/2, this.y - this.size/2 + random(-5,5), this.size, this.size);
     //rect(this.x, this.y, this.size, this.size,10,10);
     //fill(this.col);
-    
+
     if(this.history.length>10) {
       this.history.splice(0,1);
     }
