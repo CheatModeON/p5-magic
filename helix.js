@@ -17,8 +17,6 @@ function preload() {
   bgImg = loadImage("assets/bg.jpg");
 }
 
-let d=100;
-let start=0;
 let score = 0;
 let highscore = 0;
 let reset = 1;
@@ -43,11 +41,8 @@ function setup() {
 function draw() {
   if(reset==1){
     //background(220);
-    if(start==0){
-      image(bgImg, 0, 0, width, height);
-      start=1;
-    }
-    filter(BLUR, 5);
+    image(bgImg, 0, 0, width, height);
+
     shadowText(0, 42, CENTER, "CLICK TO PLAY",width/2,height/2);
     shadowText(0, 42, CENTER, "SCORE: "+score,width/2,height/2+50);
 
@@ -148,7 +143,7 @@ function draw() {
 }
 
 function shadowText(f, size, align, txt, x, y){
-  fill(f, 100);
+  fill(f, 150);
   textSize(size);
   textAlign(align);
   text(txt,x,y);
