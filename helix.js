@@ -150,8 +150,8 @@ function draw() {
 
 function shadowText(size, align, txt, x, y){
   fill(255, 100);
-  textSize(22);
-  textAlign(LEFT);
+  textSize(size);
+  textAlign(align);
   text(txt,x,y);
 }
 
