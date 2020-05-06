@@ -150,12 +150,12 @@ function draw() {
   }
 }
 
-function shadowText(size, align, text, x, y){
+function shadowText(size, align, txt, x, y){
   textSize(22);
   textAlign(LEFT);
-  text(text,x,y);
+  text(txt,x,y);
   fill(255, 100);
-  text(text,x+10,y+10);
+  text(txt,x+10,y+10);
 }
 
 function gameOver(){
