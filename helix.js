@@ -47,12 +47,12 @@ function draw() {
       image(bgImg, 0, 0, width, height);
       start=1;
     }
-    filter(BLUR, 3);
-    shadowText(42, CENTER, "CLICK TO PLAY",width/2,height/2);
-    shadowText(42, CENTER, "SCORE: "+score,width/2,height/2+50);
+    filter(BLUR, 5);
+    shadowText(0, 42, CENTER, "CLICK TO PLAY",width/2,height/2);
+    shadowText(0, 42, CENTER, "SCORE: "+score,width/2,height/2+50);
 
     if(score==highscore && highscore > 0){
-    	shadowText(42, CENTER, "NEW HIGHSCORE!!!",width/2,height/2 - 100);
+    	shadowText(0, 42, CENTER, "NEW HIGHSCORE!!!",width/2,height/2 - 100);
     }
     score = 0;
     noLoop();
@@ -130,9 +130,8 @@ function draw() {
     }
 
     // set the texts
-    fill(255)
-    shadowText(22, LEFT, "score: "+nfc(score,0), 20, 30);
-    shadowText(22, RIGHT, "highscore: "+nfc(highscore,0), width-20, 30);
+    shadowText(255, 22, LEFT, "score: "+nfc(score,0), 20, 30);
+    shadowText(255, 22, RIGHT, "highscore: "+nfc(highscore,0), width-20, 30);
 
     // set the volume bar
     let barsize=100;
@@ -148,8 +147,8 @@ function draw() {
   }
 }
 
-function shadowText(size, align, txt, x, y){
-  fill(255, 100);
+function shadowText(f, size, align, txt, x, y){
+  fill(f, 100);
   textSize(size);
   textAlign(align);
   text(txt,x,y);
