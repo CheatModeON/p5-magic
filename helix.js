@@ -45,6 +45,7 @@ function draw() {
     //background(220);
     if(start==0){
       image(bgImg, 0, 0, width, height);
+      start=1;
     }
     filter(BLUR, 3);
     shadowText(42, CENTER, "CLICK TO PLAY",width/2,height/2);
@@ -85,7 +86,6 @@ function draw() {
     // draw the propeller
     push();
     translate(h.x-h.size/2+5,h.y-h.size/2+5);
-    rotate(h.angle);
     rotate(angle);
     stroke(0);
     fill(255)
@@ -172,23 +172,17 @@ function Helicopter(){
   this.y = height/2;
   this.size = 50;
   this.col = color(255);
-  this.angle = 1;
 
   this.display = function() {
     //ellipse(this.x, this.y, this.r*2);
     //fill(this.col);
-    push();
-    rotate(this.angle);
     image(h_img, this.x-this.size/2, this.y-this.size/2, this.size, this.size);
-    pop();
   }
   this.fall = function(d) {
     this.y=this.y+d;
-    this.angle = 1
   }
   this.fly = function(d) {
     this.y=this.y-d;
-    this.angle = -1;
   }
   this.setY = function(y) {
     this.y = y;
