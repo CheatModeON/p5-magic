@@ -1,13 +1,21 @@
 // Original game: https://www.helicoptergame.net
+
+
+let g_one ;
+let g_two ;
+
+
+
 var clouds = [];
 var rocks = [];
 var count = 0;
-
+var old_vol = 0;
 let mic;
 let h_img, r_img;
 let angle = 0;
 let charge = 0;
 let threshold = 0.05;
+let altitude = 0;
 
 let score = 0;
 let highscore = 0;
@@ -26,6 +34,8 @@ function preload() {
 
 function setup() {
   userStartAudio();
+  frameRate(60);
+
   //let title = select('#title');
   //title.html('Helix - The Game');
 
@@ -41,14 +51,15 @@ function setup() {
   background(50,180,250,140);
   initClouds(windowWidth*windowHeight/50000);
   drawClouds();
-
-
+  g_speed = new gauge(width-2*windowWidth/7, height-50, windowWidth/8, 'speed')
+  g_altitude = new gauge(width-windowWidth/8, height-50, windowWidth/8, 'altitude')
   //x2 = width;
 }
 
 function draw() {
 
   background(50,180,250,140);
+  altitude = (height-(h.size/2)-h.y) * 40
 
   if(reset==1){
     //background(220,100);
@@ -128,10 +139,22 @@ function draw() {
     pop();
 
     // when to fly
-    if(/*mouseIsPressed ||*/ vol > threshold){
-      h.fly(15); // set fly speed
+
+    vol = lerp(old_vol,vol,0.1); // LERPing to reduce noice on volume
+    let maxSpeed = 20;
+    let flightSpeed = 0;
+
+    if(/*mouseIsPressed ||*/ vol > 0.001){
+      //map the voice volume to flight speed
+      if(vol>threshold) {
+        vol=threshold;
+      }
+      let actual = map(vol,0,threshold,0,1,true);
+
+      flightSpeed = actual * maxSpeed
+      h.fly(flightSpeed); // set fly speed
       if(charge < 70){
-        charge += 1; // propeller motion
+        charge += flightSpeed/10; // propeller motion
       }
     } else {
       if(charge > 10){
@@ -145,6 +168,7 @@ function draw() {
       gameOver();
     }
     if(h.y>height-h.size/2){
+      altitude=0;
       gameOver();
     }
 
@@ -173,7 +197,7 @@ function draw() {
     shadowText(255, 22, RIGHT, "highscore: "+nfc(highscore,0), width-20, 30, 150);
 
     // set the volume bar
-    let barsize=100;
+    let barsize=width - 40;
     noStroke()
     rect(20+barsize/2,50,barsize,5, 5, 5);
     fill(0,100);
@@ -182,8 +206,18 @@ function draw() {
     }
     let actual = map(vol,0,threshold,0,1,true);
     let x = 20+actual * barsize;
-    ellipse(x, 50, 10, 10);
+    fill(0);
+    ellipse(x, 50, 15, 15);
 
+    shadowText(255, 22, RIGHT, "altitude: "+nfc(altitude,0)+ " feet", width/2 + 80, 30, 150);
+    old_vol = vol;
+
+
+    angleMode(RADIANS);
+    let gSpeed = map(flightSpeed,0,maxSpeed,0,100);
+    let gAlt = map(altitude,0,(height-(h.size/2)) * 40,0,100);
+    g_speed.drw(int(gSpeed));
+    g_altitude.drw(int(gAlt));
   }
 
 
@@ -315,4 +349,60 @@ function drawClouds(){
       clouds.splice(i, 1);
     }
   }
+}
+
+
+
+
+class gauge {
+    constructor(x, y, size, title) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.title = title;
+    }
+    drw(value) {
+        this.value = value;
+
+        stroke(5);
+        fill(255);
+        //arc(this.x, this.y, 200, 200, 5*QUARTER_PI, -QUARTER_PI);
+        arc(this.x, this.y, this.size, this.size, PI, 0, CHORD);
+
+        //fill('#17202A');
+        fill(0);
+        if(this.value!=0){
+          arc(this.x, this.y, this.size, this.size, PI,  (-PI * (100-this.value)/100));
+        }
+        //fill('#5D6D7E');
+
+        fill(100,100,100);
+        if(this.value<20 && this.title=="altitude"){
+          fill((255* (1+sin(millis() / 100)) /2),0,0);
+        }
+        if(this.value<30 && this.title=="speed"){
+          fill((255* (1+sin(millis() / 100)) /2),0,0);
+        }
+        arc(this.x, this.y, this.size-this.size/10, this.size-this.size/10, -PI, 0);
+        noStroke();
+
+        textAlign(CENTER);
+        textSize(this.size/6);
+        fill(255); //text color
+        text( this.value + '%', this.x, this.y-(width/80));
+        textSize(this.size/8);
+        fill(0); //text color
+        text( this.title, this.x, this.y+(width/45));
+
+        fill('#C0392B'); //arrow color
+        let angle = -2*QUARTER_PI + (PI * this.value/100) ;
+        let x = this.x + this.size/2 * sin(angle);
+        let y = this.y - this.size/2 * cos(angle);
+        let y1 = this.y - this.size/3 * cos(angle) + this.size/25  * sin(angle);
+        let x1 = this.x + this.size/3 * sin(angle) + this.size/25  * cos(angle);
+        let y2 = this.y - this.size/3 * cos(angle) - this.size/25  * sin(angle);
+        let x2 = this.x + this.size/3 * sin(angle) - this.size/25  * cos(angle);
+        triangle(x, y, x1, y1, x2, y2);
+    }
+
 }
