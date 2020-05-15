@@ -1,5 +1,6 @@
 // Original game: https://www.helicoptergame.net
 
+let LOW_GRAPHICS = false;
 
 let g_one ;
 let g_two ;
@@ -34,7 +35,7 @@ function preload() {
 
 function setup() {
   userStartAudio();
-  frameRate(60);
+  frameRate(30);
 
   //let title = select('#title');
   //title.html('Helix - The Game');
@@ -92,17 +93,11 @@ function draw() {
   } else {
     angleMode(RADIANS);
     // display
-    drawClouds();
 
-    if(count%100==0){
-      var newCloud = {
-            xpos: width,
-            ypos: random(0,height),
-            size: random(1.8, 2.3)
-        };
-        clouds.push(newCloud);
+    if(!LOW_GRAPHICS){
+      drawClouds();
+      generateClouds();
     }
-    count += 1;
 
     background(50,180,250,140);
 
@@ -159,7 +154,7 @@ function draw() {
     let maxSpeed = 20;
     let flightSpeed = 0;
 
-    if(/*mouseIsPressed ||*/ vol > 0.01){
+    if(/*mouseIsPressed ||*/ vol > 0.01 /*&& window.global_wink==1*/){
       //map the voice volume to flight speed
       if(vol>mic_threshold) {
         vol=mic_threshold;
@@ -227,7 +222,6 @@ function draw() {
     shadowText(255, 22, RIGHT, "altitude: "+nfc(altitude,0)+ " feet", width/2 + 80, 30, 150);
     old_vol = vol;
 
-
     angleMode(RADIANS);
 
     let gSpeed = map(flightSpeed,0,maxSpeed,0,100);
@@ -292,13 +286,17 @@ function Rock(){
   this.history = [];
 
   this.display = function() {
-    this.history.push(createVector(this.x,this.y));
-    for(var i=0; i<this.history.length; i++){
-      noStroke();
-      colorMode(HSB);
-      fill(70-(i*7),255,255,i/10);
-      ellipse(this.history[i].x + random(20,30), this.history[i].y + random(-5,5), this.size-i*5);
+
+    if(!LOW_GRAPHICS) {
+      this.history.push(createVector(this.x,this.y));
+      for(var i=0; i<this.history.length; i++){
+        noStroke();
+        colorMode(HSB);
+        fill(70-(i*7),255,255,i/10);
+        ellipse(this.history[i].x + random(20,30), this.history[i].y + random(-5,5), this.size-i*5);
+      }
     }
+
     colorMode(RGB);
     image(r_img, this.x-this.size/2, this.y - this.size/2 + random(-2,2), this.size, this.size);
     //rect(this.x, this.y, this.size, this.size,10,10);
@@ -364,6 +362,18 @@ function drawClouds(){
       clouds.splice(i, 1);
     }
   }
+}
+
+function generateClouds(){
+  if(count%100==0){
+    var newCloud = {
+          xpos: width,
+          ypos: random(0,height),
+          size: random(1.8, 2.3)
+      };
+      clouds.push(newCloud);
+  }
+  count += 1;
 }
 
 
