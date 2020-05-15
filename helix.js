@@ -4,8 +4,6 @@
 let g_one ;
 let g_two ;
 
-
-
 var clouds = [];
 var rocks = [];
 var count = 0;
@@ -14,7 +12,7 @@ let mic;
 let h_img, r_img;
 let angle = 0;
 let charge = 0;
-let threshold = 0.05;
+let mic_threshold = 0.05;
 let altitude = 0;
 
 let score = 0;
@@ -26,10 +24,12 @@ var bgImg;
 var x1 = 0;
 var x2;
 var scrollSpeed = 2;
+
+var resizeFactor;
 function preload() {
   h_img = loadImage('assets/helicopter.png');
   r_img = loadImage('assets/rock.png');
-  bgImg = loadImage("assets/bg.jpg");
+  //bgImg = loadImage("assets/bg.jpg");
 }
 
 function setup() {
@@ -43,7 +43,15 @@ function setup() {
   mic.start();
 
   createCanvas(windowWidth, windowHeight);
-  h = new Helicopter();
+
+  resizeFactor=windowWidth*windowHeight/15000;
+  if(resizeFactor<35) {
+    h = new Helicopter(30);
+  } else if(resizeFactor<80) {
+    h = new Helicopter(50);
+  } else {
+    h = new Helicopter(80);
+  }
   r = new Rock();
 
   rectMode(CENTER);
@@ -58,14 +66,11 @@ function setup() {
 
 function draw() {
 
-  background(50,180,250,140);
-  altitude = (height-(h.size/2)-h.y) * 40
-
   if(reset==1){
     //background(220,100);
     //background(50,180,250,140);
     ///image(bgImg, 0, 0, width, height);
-
+    background(50,180,250,140);
     noLoop();
     if(firstLoad==1) {
       shadowText(0, width/10, CENTER, "Welcome to Helix",width/2,height/4, 180);
@@ -99,6 +104,10 @@ function draw() {
     }
     count += 1;
 
+    background(50,180,250,140);
+
+    altitude = (height-(h.size/2)-h.y) * 40
+
     //background(220);
     // background movement
 
@@ -131,11 +140,17 @@ function draw() {
     // draw the propeller
     push();
     angleMode(DEGREES);
-    translate(h.x-h.size/2+5,h.y-h.size/2+5);
+    if(resizeFactor<35) {
+      translate(h.x-h.size/2 + 3, h.y-h.size/2 + 3);
+    } else if(resizeFactor<80) {
+      translate(h.x-h.size/2 + 5, h.y-h.size/2 + 8);
+    } else {
+      translate(h.x-h.size/2 + 8, h.y-h.size/2 + 20);
+    }
     rotate(angle);
     stroke(0);
     fill(255)
-    rect(0,0,15,2,5,5);
+    rect(0,0,h.size/3.5,h.size/25, 5,5);
     pop();
 
     // when to fly
@@ -144,21 +159,21 @@ function draw() {
     let maxSpeed = 20;
     let flightSpeed = 0;
 
-    if(/*mouseIsPressed ||*/ vol > 0.001){
+    if(/*mouseIsPressed ||*/ vol > 0.01){
       //map the voice volume to flight speed
-      if(vol>threshold) {
-        vol=threshold;
+      if(vol>mic_threshold) {
+        vol=mic_threshold;
       }
-      let actual = map(vol,0,threshold,0,1,true);
+      let actual = map(vol,0,mic_threshold,0,1,true);
 
       flightSpeed = actual * maxSpeed
       h.fly(flightSpeed); // set fly speed
       if(charge < 70){
-        charge += flightSpeed/10; // propeller motion
+        charge += 1; // propeller motion
       }
     } else {
       if(charge > 10){
-        charge -= 3; // propeller motion
+        charge -= 5; // propeller motion
       }
     }
     angle = angle + charge;
@@ -201,10 +216,10 @@ function draw() {
     noStroke()
     rect(20+barsize/2,50,barsize,5, 5, 5);
     fill(0,100);
-    if(vol>threshold) {
-      vol=threshold;
+    if(vol>mic_threshold) {
+      vol=mic_threshold;
     }
-    let actual = map(vol,0,threshold,0,1,true);
+    let actual = map(vol,0,mic_threshold,0,1,true);
     let x = 20+actual * barsize;
     fill(0);
     ellipse(x, 50, 15, 15);
@@ -214,12 +229,12 @@ function draw() {
 
 
     angleMode(RADIANS);
+
     let gSpeed = map(flightSpeed,0,maxSpeed,0,100);
     let gAlt = map(altitude,0,(height-(h.size/2)) * 40,0,100);
     g_speed.drw(int(gSpeed));
     g_altitude.drw(int(gAlt));
   }
-
 
 }
 
@@ -243,10 +258,10 @@ function gameOver(){
   r.history = [];
 }
 
-function Helicopter(){
+function Helicopter(size){
   this.x = width/6;
   this.y = height/2;
-  this.size = 50;
+  this.size = size;
   this.col = color(255);
 
   this.display = function() {
@@ -352,8 +367,6 @@ function drawClouds(){
 }
 
 
-
-
 class gauge {
     constructor(x, y, size, title) {
         this.x = x;
@@ -377,11 +390,11 @@ class gauge {
         //fill('#5D6D7E');
 
         fill(100,100,100);
-        if(this.value<20 && this.title=="altitude"){
-          fill((255* (1+sin(millis() / 100)) /2),0,0);
+        if( (this.value<20 || this.value>80) && this.title=="altitude"){
+          fill((255* (1+sin(millis() / 80)) /2),0,0);
         }
-        if(this.value<30 && this.title=="speed"){
-          fill((255* (1+sin(millis() / 100)) /2),0,0);
+        if( (this.value<30 || this.value>90) && this.title=="speed"){
+          fill((255* (1+sin(millis() / 80)) /2),0,0);
         }
         arc(this.x, this.y, this.size-this.size/10, this.size-this.size/10, -PI, 0);
         noStroke();
