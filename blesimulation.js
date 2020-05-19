@@ -1,13 +1,20 @@
 // https://github.com/gsongsong/mlat/tree/master/js
 
-var [W, L, H] = [window.innerWidth, window.innerHeight, 0]
+
+var c_width = window.innerWidth; //windowWidth
+var c_height = window.innerHeight; //windowHeight
+var spacer = 10; // this mustbe divided perdectly with width and height
+
+var [W, L, H] = [c_width, c_height, 0]  //window.innerWidth, window.innerHeight
 var anchors = [[50, 50, H],
                [W-50, 50, H],
                [W-50, L-50, H],
                [50, L-50, H]]
 var node = [W * Math.random(), L * Math.random(), 0];
-var ranges = new_vector(anchors.length)
-var error = 0.5 + 5
+
+var node = [0, 0, 0];
+var ranges = new_vector(anchors.length);
+var error = 0.5;
 var ranges_with_error = ranges.slice()
 for (var i = 0; i < anchors.length; i++) {
   ranges[i] = d(anchors[i], node)
@@ -40,39 +47,54 @@ for (var i = 0; i < numeric.dim(anchors)[1]; i++) {
 bounds[0][numeric.dim(anchors)[1] - 1] = 0;
 */
 
+var maxError=100;
 var all_error = 0;
 var measurements = 0;
 var bluetooth = [];
 var person;
 var n;
 var grid;
+
+var heatMap=[];
+var heatMode=true;
+var direction=1;
+
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(c_width, c_height);
   n=4;
-  frameRate(25);
+  frameRate(60);
+  rectMode(CENTER);
+
+  // init pixel based heatMap
+  for (let x = 0; x < width+2*spacer; x++) {
+    heatMap[x] = []; // create nested array
+    for (let y = 0; y < height+2*spacer; y++) {
+      heatMap[x][y] = 0;
+    }
+  }
 
   bluetooth[0] = new BLE();
   bluetooth[0].x = anchors[0][0];
   bluetooth[0].y = anchors[0][1];
-  bluetooth[0].color = color(255,0,0);
+  bluetooth[0].color = color(222,0,0);
   bluetooth[0].text = "BLE Beacon "+bluetooth.length;
 
   bluetooth[1] = new BLE();
   bluetooth[1].x = anchors[1][0];
   bluetooth[1].y = anchors[1][1];
-  bluetooth[1].color = color(0,255,0);
+  bluetooth[1].color = color(0,222,0);
   bluetooth[1].text = "BLE Beacon "+bluetooth.length;
 
   bluetooth[2] = new BLE();
   bluetooth[2].x = anchors[2][0];
   bluetooth[2].y = anchors[2][1];
-  bluetooth[2].color = color(255,0,255);
+  bluetooth[2].color = color(222,0,222);
   bluetooth[2].text = "BLE Beacon "+bluetooth.length;
 
   bluetooth[3] = new BLE();
   bluetooth[3].x = anchors[3][0];
   bluetooth[3].y = anchors[3][1];
-  bluetooth[3].color = color(0,0,255);
+  bluetooth[3].color = color(0,0,222);
   bluetooth[3].text = "BLE Beacon "+bluetooth.length;
 
   person = new HUMAN();
@@ -90,11 +112,11 @@ function draw() {
   grid.draw();
 
   ranges = new_vector(anchors.length)
-  error = 0.5 + 5
+  error = 55.5;
   ranges_with_error = ranges.slice()
   for (var i = 0; i < anchors.length; i++) {
     ranges[i] = d(anchors[i], node)
-    ranges_with_error[i] = ranges[i] + 2 * error * (Math.random() - 0.5)
+    ranges_with_error[i] = ranges[i] + 2 * error * (Math.random() - 0.5) // add noise
   }
 
 	for (var i = 0; i < bluetooth.length; i++) {
@@ -121,14 +143,13 @@ function draw() {
   person.y = gdescent_result.estimator[1];
 
   //print actual position and estimate error
-  stroke(122);
+  stroke(0);
   ellipse(node[0],node[1],30,30);
   noStroke();
-  fill(122);
+  fill(0);
   text("Actual Position",node[0],node[1]+30);
 
   //person.error = dist(node[0],node[1],person.x,person.y);
-
 
   noStroke();
   text("Error: " + person.error, width/2, height-40);
@@ -150,6 +171,61 @@ function draw() {
 
   all_error += person.error;
   measurements += 1;
+
+
+
+  heatMap[node[0]][node[1]] = map(all_error/measurements,0,maxError,0,255);
+//console.log(heatMap[node[0]][node[1]]);
+  // show heatmap
+  if(heatMode) {
+    colorMode(HSB);
+    for (let x = 0; x < width + 2*spacer; x += spacer) {
+      for (let y = 0; y < height + 2*spacer; y += spacer) {
+        strokeWeight(1);
+        noStroke();
+        //stroke(255 - heatMap[x][y], 100, 100);
+        fill(255 - heatMap[x][y], 100, 100);
+        rect(x,y,int(spacer/2),int(spacer/2))
+        //point(x  , y  );
+
+        bi_interpol(x,y);
+        bi_interpol2(x,y);
+        bi_interpol3(x,y);
+        //bi_interpol(x+int(spacer/2),y);
+
+        //bi_interpol(y+int(spacer/2));
+        //bi_interpol(x+int(spacer/2),y+int(spacer/2));
+        //di_interpolation(x,y);
+      }
+    }
+    fill(255);
+    strokeWeight(4);
+    stroke(255, 100, 100);
+    // the stroke of this text is equal to the stroke of the last square of the heatmap - thus blue.
+    // when the mapping is finished it changes color
+    textAlign(CENTER);
+    text("Press SHIFT to disable Heatmap",width/2,height/2);
+    colorMode(RGB);
+  }
+
+  // simulated movement
+  if(node[1]<height+spacer){
+    var samples=80;
+    if(measurements%samples==0){
+      node[0]+=spacer*direction;
+
+      if(node[0]>width+spacer || node[0]<0){
+        direction=-direction;
+
+        node[0]+=spacer*direction
+        node[1]+=spacer;
+      }
+
+      all_error=0;
+      measurements=0;
+    }
+  }
+
 }
 
 function mouseClicked() {
@@ -171,13 +247,13 @@ function mouseClicked() {
 
 function keyPressed() {
   if (keyCode === LEFT_ARROW) {
-    node[0] -= 20
+    if(node[0]>=spacer) { node[0] -= spacer; }
   } else if (keyCode === RIGHT_ARROW) {
-    node[0] += 20
+    if(node[0]<width) { node[0] += spacer; }
   } else if (keyCode === UP_ARROW) {
-    node[1] -= 20
+    if(node[1]>=spacer) { node[1] -= spacer; }
   } else if (keyCode === DOWN_ARROW) {
-    node[1] += 20
+    if(node[1]<height) { node[1] += spacer; }
   }
 
   if (keyCode === ENTER) {
@@ -186,22 +262,42 @@ function keyPressed() {
   }
   all_error = 0;
   measurements = 0;
+
+  if (keyCode === SHIFT) {
+    if(heatMode==true){heatMode=false;} else {heatMode=true}
+  }
 }
 
 
 class Grid {
   constructor() {
-    this.gap = 22;
+    this.gap = spacer;
   }
   draw() {
+
+    push();
+    translate(width/2,height/2);
+    stroke(0,50);
+    strokeWeight(4);
+
+    line(0,-height,0,height);
+    line(-width,0,width,0);
+
     stroke(0,30);
     strokeWeight(1);
-    for(var i = 0; i<width; i+=this.gap){
-      line(i,0,i,height);
+    for(var i = 0; i<width/2; i+=this.gap){
+      line(i,-height,i,height);
     }
-    for(var i = 0; i<height; i+=this.gap){
-      line(0,i,width,i);
+    for(var i = 0; i>-width/2; i-=this.gap){
+      line(i,-height,i,height);
     }
+    for(var i = 0; i<height/2; i+=this.gap){
+      line(-width,i,width,i);
+    }
+    for(var i = 0; i>-height/2; i-=this.gap){
+      line(-width,i,width,i);
+    }
+    pop();
   }
 
 }
@@ -267,4 +363,116 @@ class BLE {
     text(this.text,0,this.size);
     pop();
 	}
+}
+
+
+
+
+// https://codepen.io/jarirepo/pen/jBYjQZ
+
+function bi_interpol(i,j) {
+  //for (var i=0; i<width-spacer; i++) {
+    //for (var j=0; j<height-spacer; j++) {
+      if(i<width && j<height+spacer){
+        var x1=i;
+        var x2=i+spacer;
+        var y1=j;
+        var y2=j+spacer;
+
+        var c11 = heatMap[x1][y1] //im.get(x1+j, y1+i);
+        var c12 = heatMap[x1][y2] //im.get(x1+j+1, y1+i);
+        var c21 = heatMap[x2][y1] //im.get(x1+j, y1+i+1);
+        var c22 = heatMap[x2][y2] //im.get(x1+j+1, y1+i+1);
+
+        var x = i + int(spacer/2)
+        var y = j + int(spacer/2)
+
+        heatMap[x][y1] = ( ( (x2-x)/(x2-x1) ) * c11 ) + ( ( (x-x1)/(x2-x1) ) * c21 );
+        heatMap[x][y2] = ( ( (x2-x)/(x2-x1) ) * c12 ) + ( ( (x-x1)/(x2-x1) ) * c22 );
+
+        heatMap[x][y] = ( (y2-y)/(y2-y1) * heatMap[x][y1] ) + ( (y-y1)/(y2-y1) * heatMap[x][y2] )
+
+        colorMode(HSB);
+        //noStroke();
+        //strokeWeight(1);
+        //stroke(255 - heatMap[x][y], 100, 100);
+        fill(255 - heatMap[x][y], 100, 100);
+        rect(x, y, int(spacer/2),int(spacer/2));
+        //colorMode(RGB);
+      }
+
+  //  }
+  //}
+}
+
+
+function bi_interpol2(i,j) {
+  //for (var i=0; i<width-spacer; i++) {
+    //for (var j=0; j<height-spacer; j++) {
+      if(i<width+spacer && j<height+spacer){
+        var x1=i;
+        var x2=i+spacer;
+        var y1=j;
+        var y2=j+spacer;
+
+        var c11 = heatMap[x1][y1] //im.get(x1+j, y1+i);
+        var c12 = heatMap[x1][y2] //im.get(x1+j+1, y1+i);
+        var c21 = heatMap[x2][y1] //im.get(x1+j, y1+i+1);
+        var c22 = heatMap[x2][y2] //im.get(x1+j+1, y1+i+1);
+
+        var x = i + int(spacer/2)
+        var y = j
+
+        heatMap[x][y1] = ( ( (x2-x)/(x2-x1) ) * c11 ) + ( ( (x-x1)/(x2-x1) ) * c21 );
+        heatMap[x][y2] = ( ( (x2-x)/(x2-x1) ) * c12 ) + ( ( (x-x1)/(x2-x1) ) * c22 );
+
+        heatMap[x][y] = ( (y2-y)/(y2-y1) * heatMap[x][y1] ) + ( (y-y1)/(y2-y1) * heatMap[x][y2] )
+
+        colorMode(HSB);
+        //noStroke();
+        //strokeWeight(1);
+        //stroke(255 - heatMap[x][y], 100, 100);
+
+        fill(255 - heatMap[x][y], 100, 100);
+        rect(x, y, int(spacer/2),int(spacer/2));
+        //colorMode(RGB);
+      }
+
+  //  }
+  //}
+}
+function bi_interpol3(i,j) {
+  //for (var i=0; i<width-spacer; i++) {
+    //for (var j=0; j<height-spacer; j++) {
+      if(i<width+spacer && j<height+spacer){
+        var x1=i;
+        var x2=i+spacer;
+        var y1=j;
+        var y2=j+spacer;
+
+        var c11 = heatMap[x1][y1] //im.get(x1+j, y1+i);
+        var c12 = heatMap[x1][y2] //im.get(x1+j+1, y1+i);
+        var c21 = heatMap[x2][y1] //im.get(x1+j, y1+i+1);
+        var c22 = heatMap[x2][y2] //im.get(x1+j+1, y1+i+1);
+
+        var x = i
+        var y = j + int(spacer/2)
+
+        heatMap[x][y1] = ( ( (x2-x)/(x2-x1) ) * c11 ) + ( ( (x-x1)/(x2-x1) ) * c21 );
+        heatMap[x][y2] = ( ( (x2-x)/(x2-x1) ) * c12 ) + ( ( (x-x1)/(x2-x1) ) * c22 );
+
+        heatMap[x][y] = ( (y2-y)/(y2-y1) * heatMap[x][y1] ) + ( (y-y1)/(y2-y1) * heatMap[x][y2] )
+
+        colorMode(HSB);
+        //noStroke();
+        //strokeWeight(1);
+        //stroke(255 - heatMap[x][y], 100, 100);
+
+        fill(255 - heatMap[x][y], 100, 100);
+        rect(x, y, int(spacer/2),int(spacer/2));
+        //colorMode(RGB);
+      }
+
+  //  }
+  //}
 }
