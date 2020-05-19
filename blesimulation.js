@@ -361,11 +361,11 @@ class BLE {
 
 
 
-// https://codepen.io/jarirepo/pen/jBYjQZ
+// https://en.wikipedia.org/wiki/Bilinear_interpolation
 // 3 way bilinear interpolarization
 
 function bi_interpol(i,j) {
-  if(i<width && j<height+spacer){
+  if(i<width+spacer && j<height+spacer){
     var x1=i;
     var x2=i+spacer;
     var y1=j;
