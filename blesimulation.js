@@ -189,13 +189,6 @@ function draw() {
         //point(x  , y  );
 
         bi_interpol(x,y);
-        bi_interpol2(x,y);
-        bi_interpol3(x,y);
-        //bi_interpol(x+int(spacer/2),y);
-
-        //bi_interpol(y+int(spacer/2));
-        //bi_interpol(x+int(spacer/2),y+int(spacer/2));
-        //di_interpolation(x,y);
       }
     }
     fill(255);
@@ -369,110 +362,59 @@ class BLE {
 
 
 // https://codepen.io/jarirepo/pen/jBYjQZ
+// 3 way bilinear interpolarization
 
 function bi_interpol(i,j) {
-  //for (var i=0; i<width-spacer; i++) {
-    //for (var j=0; j<height-spacer; j++) {
-      if(i<width && j<height+spacer){
-        var x1=i;
-        var x2=i+spacer;
-        var y1=j;
-        var y2=j+spacer;
+  if(i<width && j<height+spacer){
+    var x1=i;
+    var x2=i+spacer;
+    var y1=j;
+    var y2=j+spacer;
 
-        var c11 = heatMap[x1][y1] //im.get(x1+j, y1+i);
-        var c12 = heatMap[x1][y2] //im.get(x1+j+1, y1+i);
-        var c21 = heatMap[x2][y1] //im.get(x1+j, y1+i+1);
-        var c22 = heatMap[x2][y2] //im.get(x1+j+1, y1+i+1);
+    var c11 = heatMap[x1][y1];
+    var c12 = heatMap[x1][y2];
+    var c21 = heatMap[x2][y1];
+    var c22 = heatMap[x2][y2];
 
-        var x = i + int(spacer/2)
-        var y = j + int(spacer/2)
+    // ONE way
+    var x = i + int(spacer/2)
+    var y = j + int(spacer/2)
 
-        heatMap[x][y1] = ( ( (x2-x)/(x2-x1) ) * c11 ) + ( ( (x-x1)/(x2-x1) ) * c21 );
-        heatMap[x][y2] = ( ( (x2-x)/(x2-x1) ) * c12 ) + ( ( (x-x1)/(x2-x1) ) * c22 );
+    heatMap[x][y1] = ( ( (x2-x)/(x2-x1) ) * c11 ) + ( ( (x-x1)/(x2-x1) ) * c21 );
+    heatMap[x][y2] = ( ( (x2-x)/(x2-x1) ) * c12 ) + ( ( (x-x1)/(x2-x1) ) * c22 );
 
-        heatMap[x][y] = ( (y2-y)/(y2-y1) * heatMap[x][y1] ) + ( (y-y1)/(y2-y1) * heatMap[x][y2] )
+    heatMap[x][y] = ( (y2-y)/(y2-y1) * heatMap[x][y1] ) + ( (y-y1)/(y2-y1) * heatMap[x][y2] )
 
-        colorMode(HSB);
-        //noStroke();
-        //strokeWeight(1);
-        //stroke(255 - heatMap[x][y], 100, 100);
-        fill(255 - heatMap[x][y], 100, 100);
-        rect(x, y, int(spacer/2),int(spacer/2));
-        //colorMode(RGB);
-      }
+    colorMode(HSB);
+    fill(255 - heatMap[x][y], 100, 100);
+    rect(x, y, int(spacer/2),int(spacer/2));
 
-  //  }
-  //}
-}
+    // TWO way
+    var x = i + int(spacer/2)
+    var y = j
+
+    heatMap[x][y1] = ( ( (x2-x)/(x2-x1) ) * c11 ) + ( ( (x-x1)/(x2-x1) ) * c21 );
+    heatMap[x][y2] = ( ( (x2-x)/(x2-x1) ) * c12 ) + ( ( (x-x1)/(x2-x1) ) * c22 );
+
+    heatMap[x][y] = ( (y2-y)/(y2-y1) * heatMap[x][y1] ) + ( (y-y1)/(y2-y1) * heatMap[x][y2] )
+
+    colorMode(HSB);
+    fill(255 - heatMap[x][y], 100, 100);
+    rect(x, y, int(spacer/2),int(spacer/2));
+
+    // THREE way
+    var x = i
+    var y = j + int(spacer/2)
+
+    heatMap[x][y1] = ( ( (x2-x)/(x2-x1) ) * c11 ) + ( ( (x-x1)/(x2-x1) ) * c21 );
+    heatMap[x][y2] = ( ( (x2-x)/(x2-x1) ) * c12 ) + ( ( (x-x1)/(x2-x1) ) * c22 );
+
+    heatMap[x][y] = ( (y2-y)/(y2-y1) * heatMap[x][y1] ) + ( (y-y1)/(y2-y1) * heatMap[x][y2] )
+
+    colorMode(HSB);
+    fill(255 - heatMap[x][y], 100, 100);
+    rect(x, y, int(spacer/2),int(spacer/2));
+  }
 
 
-function bi_interpol2(i,j) {
-  //for (var i=0; i<width-spacer; i++) {
-    //for (var j=0; j<height-spacer; j++) {
-      if(i<width+spacer && j<height+spacer){
-        var x1=i;
-        var x2=i+spacer;
-        var y1=j;
-        var y2=j+spacer;
-
-        var c11 = heatMap[x1][y1] //im.get(x1+j, y1+i);
-        var c12 = heatMap[x1][y2] //im.get(x1+j+1, y1+i);
-        var c21 = heatMap[x2][y1] //im.get(x1+j, y1+i+1);
-        var c22 = heatMap[x2][y2] //im.get(x1+j+1, y1+i+1);
-
-        var x = i + int(spacer/2)
-        var y = j
-
-        heatMap[x][y1] = ( ( (x2-x)/(x2-x1) ) * c11 ) + ( ( (x-x1)/(x2-x1) ) * c21 );
-        heatMap[x][y2] = ( ( (x2-x)/(x2-x1) ) * c12 ) + ( ( (x-x1)/(x2-x1) ) * c22 );
-
-        heatMap[x][y] = ( (y2-y)/(y2-y1) * heatMap[x][y1] ) + ( (y-y1)/(y2-y1) * heatMap[x][y2] )
-
-        colorMode(HSB);
-        //noStroke();
-        //strokeWeight(1);
-        //stroke(255 - heatMap[x][y], 100, 100);
-
-        fill(255 - heatMap[x][y], 100, 100);
-        rect(x, y, int(spacer/2),int(spacer/2));
-        //colorMode(RGB);
-      }
-
-  //  }
-  //}
-}
-function bi_interpol3(i,j) {
-  //for (var i=0; i<width-spacer; i++) {
-    //for (var j=0; j<height-spacer; j++) {
-      if(i<width+spacer && j<height+spacer){
-        var x1=i;
-        var x2=i+spacer;
-        var y1=j;
-        var y2=j+spacer;
-
-        var c11 = heatMap[x1][y1] //im.get(x1+j, y1+i);
-        var c12 = heatMap[x1][y2] //im.get(x1+j+1, y1+i);
-        var c21 = heatMap[x2][y1] //im.get(x1+j, y1+i+1);
-        var c22 = heatMap[x2][y2] //im.get(x1+j+1, y1+i+1);
-
-        var x = i
-        var y = j + int(spacer/2)
-
-        heatMap[x][y1] = ( ( (x2-x)/(x2-x1) ) * c11 ) + ( ( (x-x1)/(x2-x1) ) * c21 );
-        heatMap[x][y2] = ( ( (x2-x)/(x2-x1) ) * c12 ) + ( ( (x-x1)/(x2-x1) ) * c22 );
-
-        heatMap[x][y] = ( (y2-y)/(y2-y1) * heatMap[x][y1] ) + ( (y-y1)/(y2-y1) * heatMap[x][y2] )
-
-        colorMode(HSB);
-        //noStroke();
-        //strokeWeight(1);
-        //stroke(255 - heatMap[x][y], 100, 100);
-
-        fill(255 - heatMap[x][y], 100, 100);
-        rect(x, y, int(spacer/2),int(spacer/2));
-        //colorMode(RGB);
-      }
-
-  //  }
-  //}
 }
