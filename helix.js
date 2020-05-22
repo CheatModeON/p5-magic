@@ -26,6 +26,8 @@ var x1 = 0;
 var x2;
 var scrollSpeed = 2;
 
+var ghosts = [];
+
 var resizeFactor;
 function preload() {
   h_img = loadImage('assets/helicopter.png');
@@ -36,6 +38,10 @@ function preload() {
 function setup() {
   userStartAudio();
   frameRate(30);
+
+  socket = io.connect('https://helix-server.herokuapp.com');
+
+  socket.on('state', newGhost);
 
   //let title = select('#title');
   //title.html('Helix - The Game');
@@ -67,6 +73,7 @@ function setup() {
 
 function draw() {
 
+
   if(reset==1){
     //background(220,100);
     //background(50,180,250,140);
@@ -91,6 +98,8 @@ function draw() {
     }
     score = 0;
   } else {
+    sendstate(h.y,reset);
+
     angleMode(RADIANS);
     // display
 
@@ -128,6 +137,18 @@ function draw() {
 
     r.display();
     h.display();
+
+    for(g=0; g<ghosts.length; g++){
+      //fill(0,0,255);
+      //noStroke();
+      //ellipse(width/6, (ghosts[g].y/100)*height, 20, 20);
+      var currY = (ghosts[g].y/100)*height;
+      tint(255, 126);
+      image(h_img, h.x-h.size/2, currY-h.size/2, h.size, h.size);
+      ghosts.splice(g,1)
+      tint(255, 255);
+    }
+
     r.playspeed(5); // set play speed
     h.fall(8);     // set falling speed
     let vol = mic.getLevel();
@@ -428,4 +449,23 @@ class gauge {
         triangle(x, y, x1, y1, x2, y2);
     }
 
+}
+
+function newGhost(data){
+  if(reset==0){
+    ghosts.push(data);
+  }
+}
+
+
+function sendstate(ypos, status) {
+  yratio = map(ypos, 0, height, 0, 100);
+  console.log("sendstate: " + yratio + " " + status);
+
+  var data = {
+    y: yratio,
+    status: status
+  };
+
+  socket.emit('state',data);
 }

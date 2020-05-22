@@ -3,15 +3,25 @@
 
 var c_width = window.innerWidth; //windowWidth
 var c_height = window.innerHeight; //windowHeight
-var spacer = 10; // this mustbe divided perdectly with width and height
+var spacer = 20; // this mustbe divided perdectly with width and height
 
 var [W, L, H] = [c_width, c_height, 0]  //window.innerWidth, window.innerHeight
-var anchors = [[50, 50, H],
-               [W-50, 50, H],
-               [W-50, L-50, H],
-               [50, L-50, H]]
-var node = [W * Math.random(), L * Math.random(), 0];
+var anchors = [[100, 100, H],
+               [W-100, 100, H],
+               [W-100, L-100, H],
+               [100, L-100, H]]
 
+
+// start at a random point
+/*var ran1 = Math.floor(Math.random()*c_width/spacer);
+ran1 = ran1 * spacer ;
+var ran2 = Math.floor(Math.random()*c_height/spacer);
+ran2 = ran2 * spacer ;
+var node = [(ran1), (ran2), 0];*/
+
+//var node = [W * Math.random(), L * Math.random(), 0]; //old declaration
+
+// start from 0
 var node = [0, 0, 0];
 var ranges = new_vector(anchors.length);
 var error = 0.5;
@@ -47,7 +57,7 @@ for (var i = 0; i < numeric.dim(anchors)[1]; i++) {
 bounds[0][numeric.dim(anchors)[1] - 1] = 0;
 */
 
-var maxError=100;
+var maxError=0;
 var all_error = 0;
 var measurements = 0;
 var bluetooth = [];
@@ -112,7 +122,7 @@ function draw() {
   grid.draw();
 
   ranges = new_vector(anchors.length)
-  error = 55.5;
+  error = 55.5; // make this change dynamically change based on distance 
   ranges_with_error = ranges.slice()
   for (var i = 0; i < anchors.length; i++) {
     ranges[i] = d(anchors[i], node)
@@ -172,9 +182,13 @@ function draw() {
   all_error += person.error;
   measurements += 1;
 
+  // dynamically change maxError
+  if(maxError<all_error/measurements){
+    maxError = all_error/measurements;
+  }
 
 
-  heatMap[node[0]][node[1]] = map(all_error/measurements,0,maxError,0,255);
+  heatMap[int(node[0])][int(node[1])] = map(all_error/measurements,0,maxError,0,255);
 //console.log(heatMap[node[0]][node[1]]);
   // show heatmap
   if(heatMode) {
